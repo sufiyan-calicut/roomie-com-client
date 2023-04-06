@@ -19,6 +19,8 @@ import AdminAuth from "./components/admin-components/AdminAuth";
 import ForgetPasswordForm from "./components/user-components/register-and-login/ForgetPasswordForm";
 import OtpReset from "./components/user-components/register-and-login/OtpReset";
 import ResetPasswordForm from "./components/user-components/register-and-login/ResetPasswordForm";
+import DisplayRoomsPage from "./pages/user-pages/rooms/DisplayRoomsPage";
+import AddRoom from "./components/admin-components/room-components/AddRoom";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -53,6 +55,7 @@ function App() {
         <Route path="/set-new-password" element={<ResetPasswordForm />} />
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Home />} />
+          <Route path="/display-rooms" element={<DisplayRoomsPage />} />
         </Route>
 
         <Route path="/admin" element={<AdminSignIn />} />
@@ -60,6 +63,7 @@ function App() {
           <Route path="/admin/dashboard" element={<AdminHome />} />
           <Route path="/admin/userslist" element={<UsersList />} />
         </Route>
+        <Route path="/add-room" element={<AddRoom/>} />
       </Routes>
     </Router>
   );

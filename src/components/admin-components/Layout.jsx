@@ -96,7 +96,7 @@ function Layout({ children }) {
               </Link>
             </div>
           </div>
-          <div className="body">{children}</div>
+          <div className="layout-body">{children}</div>
         </div>
       </div>
     </div>

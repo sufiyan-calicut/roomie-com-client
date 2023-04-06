@@ -17,12 +17,13 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo ">
-        <h1 className="font-bold">MISTY LAND</h1>
+        <h1 className="font-bold cursor-default">MISTY LAND</h1>
       </div>
-      <div className="navbar-links">
+      <div className="navbar-links cursor-default">
         <a onClick={() => navigate("/")}>Home</a>
         <a onClick={() => navigate("/about")}>About</a>
         <a onClick={() => navigate("/contact")}>Contact</a>
+        <a onClick={() => navigate("/display-rooms")}>Rooms</a>
       </div>
       <div className="navbar-icons">
         <FontAwesomeIcon icon={faBell} />
