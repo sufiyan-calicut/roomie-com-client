@@ -202,4 +202,14 @@ body a {
   /* ......................
    */
 
+   .number-input::-webkit-outer-spin-button,
+   .number-input::-webkit-inner-spin-button{
+    -webkit-appearance:none;
+    margin: 0;
+   }
+
+   .number-input{
+    appearance:textfield;
+   }
+
    

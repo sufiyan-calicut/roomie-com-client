@@ -23,12 +23,15 @@
     justify-content: space-between;
   }
   .layout-body {
-    background-color: white;
+    /* background-color: white; */
     border-radius: 5px;
     box-shadow: 0 0 2px grey;
     height: 82vh;
-    overflow-x: scroll;
+    /* overflow-y: scroll; */
     display: flex;
+    width: 82vw;
+    max-width: 82vw;
+    /* background-color: rgb(243, 245, 245); */
     
   }
   .content {
