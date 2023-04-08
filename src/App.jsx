@@ -62,8 +62,8 @@ function App() {
         <Route element={<AdminAuth />}>
           <Route path="/admin/dashboard" element={<AdminHome />} />
           <Route path="/admin/userslist" element={<UsersList />} />
+          <Route path="/admin/add-room" element={<AddRoom />} />
         </Route>
-        <Route path="/add-room" element={<AddRoom/>} />
       </Routes>
     </Router>
   );

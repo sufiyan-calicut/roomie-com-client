@@ -1,24 +1,28 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Layout from "../Layout";
+import api from "../../../api/axios";
 
 import { toast } from "react-hot-toast";
 
 function AddRoom() {
+  const formRef = useRef(null)
+
+  
   // states of counts
-  const [roomName, setRoomName] = useState("");
-  const [category, setCategory] = useState("");
-  const [price, setPrice] = useState();
-  const [images, setImages] = useState("");
-  const [numberofBeds, setNumberofBeds] = useState(1);
-  const [numberOfRooms, setNumberofRooms] = useState(1);
-  const [numberofStayDays, setNumberofStayDays] = useState(1);
-  const [allowedGuests, setAllowedGuests] = useState(1);
-  const [rules, setRules] = useState([]);
-  const [description, setDescription] = useState("");
+    let [roomName, setRoomName] = useState("");
+  let [category, setCategory] = useState("");
+  let [price, setPrice] = useState();
+  let [images, setImages] = useState("");
+  let [numberofBeds, setNumberofBeds] = useState(1);
+  let [numberOfRooms, setNumberofRooms] = useState(1);
+  let [numberofStayDays, setNumberofStayDays] = useState(1);
+  let [allowedGuests, setAllowedGuests] = useState(1);
+  let [rules, setRules] = useState([]);
+  let [description, setDescription] = useState("");
 
   // check box state
 
-  const [checkboxes, setCheckboxes] = useState({
+  let [checkboxes, setCheckboxes] = useState({
     locker: false,
     dryer: false,
     internet: false,
@@ -29,12 +33,12 @@ function AddRoom() {
     laundry: false,
   });
 
+  
+  
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
     setCheckboxes((prevCheckboxes) => ({ ...prevCheckboxes, [name]: checked }));
   };
-
-  // rules state
 
   const handleRules = (rule) => {
     if (!rules.includes(rule)) {
@@ -44,9 +48,26 @@ function AddRoom() {
     }
   };
 
+//   document.addEventListener("keydown", function(event) {
+//     if (event.keyCode === 13) {
+//         event.preventDefault();
+//         var inputs = document.getElementsByTagName("input");
+//         for (var i = 0; i < inputs.length; i++) {
+//             if (inputs[i] === document.activeElement) {
+//                 inputs[i+1].focus();
+//                 break;
+//             }
+//         }
+//     }
+// });
+
   function handleKeyDown(event) {
+ 
     if (event.keyCode === 13) {
       const rule = event.target.value;
+      if(!rule){
+return
+      }
       // Perform actions with the value, such as updating state
       if (!rules.includes(rule)) {
         setRules([...rules, rule]);
@@ -56,16 +77,16 @@ function AddRoom() {
       event.target.value = ""; // Clear the input field
     }
   }
-
+  
   function deleteRule(index) {
     const filteredRules = rules.filter((_, i) => i !== index);
     setRules(filteredRules);
   }
-
+  
   const roomData = {
     roomName,
     category,
-    price,
+    price:parseInt(price),
     images,
     checkboxe : Object.keys(checkboxes).filter(key => checkboxes[key]) ,
     numberofBeds,
@@ -76,12 +97,51 @@ function AddRoom() {
     description
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-   console.log(roomData)
+  const resetForm = () => {
+    console.log("before =>")
+     setNumberofBeds(1)
+    setNumberofRooms(1) 
+    setNumberofStayDays(1) 
+    setAllowedGuests(1) 
+    setRules([])
+setCheckboxes([{
+  locker: false,
+  dryer: false,
+  internet: false,
+  privateKitchen: false,
+  privatePool: false,
+  bathTub: false,
+  antiTheftKey: false,
+  laundry: false,
+}])
 
-    
-  };
+    console.log("after")
+  }
+  
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(roomData)
+    try {
+
+   const response = await api.post('/admin/add-room',{roomData},{
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("adminToken"),
+    }
+   })
+
+   if(response.data.success)
+   {
+    toast.success(response.data.message)
+    formRef.current.reset();
+    resetForm()
+     }else{
+    toast.error(response.data.message)
+  }
+} catch (error) {
+  console.log(error);
+  toast.error("Something went wwrong")
+}
+  }
 
   return (
     <Layout>
@@ -92,13 +152,14 @@ function AddRoom() {
         <div className=" mb-6  border-b w-fit p-2">
           <h1 className="text-xl font-mono text-green-900 ">Add new rooms</h1>
         </div>
-        <form onSubmit={handleSubmit} className="  text-sm text-green-900">
+        <form ref={formRef} className="  text-sm text-green-900" id="form">
           <div className="grid grid-cols-4 gap-4 mt-10">
             <div className="input-block  ">
               <label className="input-label font-mono  block ">Room Name</label>
+              
               <input
               onChange={(e)=> setRoomName(e.target.value)}
-                className=" shadow-none p-1"
+                className=" shadow-none p-1  border rounded-full"
                 type="roomName"
                 autoComplete="off"
                 name="roomName"
@@ -176,9 +237,10 @@ function AddRoom() {
               </div>
               <div className="h-16  flex justify-center items-center   ">
                 <button
-                  onClick={() =>
+                type="button"
+                  onClick={() => {
                     setNumberofBeds(numberofBeds == 1 ? 1 : numberofBeds - 1)
-                  }
+                  }}
                   className="bg-white sm:rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center font-medium"
                 >
                   <i className="ri-subtract-line"></i>
@@ -187,6 +249,7 @@ function AddRoom() {
                 <h1>{numberofBeds}</h1>
 
                 <button
+                type="button"
                   onClick={() => setNumberofBeds(numberofBeds + 1)}
                   className="bg-white rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center"
                 >
@@ -201,6 +264,7 @@ function AddRoom() {
               </div>
               <div className="h-16  flex justify-center items-center   ">
                 <button
+                type="button"
                   onClick={() =>
                     setAllowedGuests(allowedGuests == 1 ? 1 : allowedGuests - 1)
                   }
@@ -211,6 +275,7 @@ function AddRoom() {
 
                 <h1> {allowedGuests} </h1>
                 <button
+                type="button"
                   onClick={() => setAllowedGuests(allowedGuests + 1)}
                   className="bg-white rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center"
                 >
@@ -224,6 +289,7 @@ function AddRoom() {
               </div>
               <div className="h-16  flex justify-center items-center   ">
                 <button
+                type="button"
                   onClick={() =>
                     setNumberofRooms(numberOfRooms == 1 ? 1 : numberOfRooms - 1)
                   }
@@ -234,6 +300,7 @@ function AddRoom() {
 
                 <h1> {numberOfRooms} </h1>
                 <button
+                type="button"
                   onClick={() => setNumberofRooms(numberOfRooms + 1)}
                   className="bg-white rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center"
                 >
@@ -247,6 +314,7 @@ function AddRoom() {
               </div>
               <div className="h-16  flex justify-center items-center   ">
                 <button
+                type="button"
                   onClick={() =>
                     setNumberofStayDays(
                       numberofStayDays == 1 ? 1 : numberofStayDays - 1
@@ -259,6 +327,7 @@ function AddRoom() {
 
                 <h1> {numberofStayDays} </h1>
                 <button
+                type="button"
                   onClick={() => setNumberofStayDays(numberofStayDays + 1)}
                   className="bg-white rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center"
                 >
@@ -269,17 +338,17 @@ function AddRoom() {
           </div>
 
           <div className="grid grid-cols-4 gap-4 m-10">
-            <div className=" h-12 mt-4 flex items-start justify-start ">
+          <div className=" h-12 mt-4 flex items-start justify-start ">
               <label htmlFor="checkbox" className="flex items-center gap-3">
                 <input
                   checked={checkboxes.locker}
                   onChange={handleCheckboxChange}
                   name="locker"
-                  id="checkbox"
+                  id="locker"
                   type="checkbox"
                   className="form-checkbox h-5 w-5 text-blue-600"
                 />
-                <span className="ml-2 text-gray-700">Locker </span>
+                <span className="ml-2 text-gray-700">Internet</span>
               </label>
             </div>
             <div className=" h-12 mt-4 flex items-start justify-start ">
@@ -288,7 +357,7 @@ function AddRoom() {
                   checked={checkboxes.internet}
                   onChange={handleCheckboxChange}
                   name="internet"
-                  id="checkbox"
+                  id="internet"
                   type="checkbox"
                   className="form-checkbox h-5 w-5 text-blue-600"
                 />
@@ -301,7 +370,7 @@ function AddRoom() {
                   checked={checkboxes.laundry}
                   onChange={handleCheckboxChange}
                   name="laundry"
-                  id="checkbox"
+                  id="laundry"
                   type="checkbox"
                   className="form-checkbox h-5 w-5 text-blue-600"
                 />
@@ -314,7 +383,7 @@ function AddRoom() {
                   checked={checkboxes.dryer}
                   onChange={handleCheckboxChange}
                   name="dryer"
-                  id="checkbox"
+                  id="dryer"
                   type="checkbox"
                   className="form-checkbox h-5 w-5 text-blue-600"
                 />
@@ -327,7 +396,7 @@ function AddRoom() {
                   checked={checkboxes.privateKitchen}
                   onChange={handleCheckboxChange}
                   name="privateKitchen"
-                  id="checkbox"
+                  id="privateKitchen"
                   type="checkbox"
                   className="form-checkbox h-5 w-5 text-blue-600"
                 />
@@ -340,7 +409,7 @@ function AddRoom() {
                   checked={checkboxes.privatePool}
                   onChange={handleCheckboxChange}
                   name="privatePool"
-                  id="checkbox"
+                  id="privatePool"
                   type="checkbox"
                   className="form-checkbox h-5 w-5 text-blue-600"
                 />
@@ -353,7 +422,7 @@ function AddRoom() {
                   checked={checkboxes.bathTub}
                   onChange={handleCheckboxChange}
                   name="bathTub"
-                  id="checkbox"
+                  id="bathTub"
                   type="checkbox"
                   className="form-checkbox h-5 w-5 text-blue-600"
                 />
@@ -366,7 +435,7 @@ function AddRoom() {
                   checked={checkboxes.antiTheftKey}
                   onChange={handleCheckboxChange}
                   name="antiTheftKey"
-                  id="checkbox"
+                  id="antiTheftKey"
                   type="checkbox"
                   className="form-checkbox h-5 w-5 text-blue-600"
                 />
@@ -388,11 +457,7 @@ function AddRoom() {
                     onKeyDown={handleKeyDown}
                     type="text "
                     className="border-gray-300 p-2 w-full mt-2"
-                    placeholder={
-                      rules.length != 0
-                        ? rules[rules.length - 1]
-                        : "Type rules...."
-                    }
+                    placeholder="Select / Type Rules"
                   />
                   <ul className="absolute z-50 bg-white border-gray-300 border-2 mt-1 rounded-md w-full">
                     <li
@@ -454,7 +519,8 @@ function AddRoom() {
               </div>
               <div className=" flex justify-end  px-2">
                 <button
-                  type="submit"
+                onClick={handleSubmit}
+                  type="button"
                   className="border-2 outline-none border-green-600 text-green-600 font-medium hover:bg-green-700 hover:text-white duration-500 rounded-lg px-6 py-2"
                 >
                   Done

@@ -22,12 +22,12 @@ function Layout({ children }) {
     },
     {
       name: "Rooms",
-      path: "/admin/profile",
+      path: "/admin/add-room",
       icon: "ri-hotel-bed-line",
     },
     {
       name: "Sales Report",
-      path: "/admin/profile",
+      path: "/admin/sales-report",
       icon: "ri-folder-chart-line",
     },
   ];
