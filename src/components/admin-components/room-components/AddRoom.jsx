@@ -3,6 +3,7 @@ import Layout from "../Layout";
 import api from "../../../api/axios";
 
 import { toast } from "react-hot-toast";
+import axios from "axios";
 
 function AddRoom() {
   const formRef = useRef(null)
@@ -48,18 +49,41 @@ function AddRoom() {
     }
   };
 
-//   document.addEventListener("keydown", function(event) {
-//     if (event.keyCode === 13) {
-//         event.preventDefault();
-//         var inputs = document.getElementsByTagName("input");
-//         for (var i = 0; i < inputs.length; i++) {
-//             if (inputs[i] === document.activeElement) {
-//                 inputs[i+1].focus();
-//                 break;
-//             }
-//         }
-//     }
-// });
+
+
+
+  const CLOUDINARY_URL = `${import.meta.env.VITE_CLOUDINARY_URL}/image/upload`;
+const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_URL;
+const image = document.querySelector('#fileupload');
+// const handleImages = (e) => {
+
+
+
+//   const file = e.target.files[0];
+//   const formData = new FormData();
+//   formData.append('file', file);
+//   formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+//   fetch(CLOUDINARY_URL, {
+//     method: 'POST',
+//     body: formData,
+//   })
+//     .then(response => response.json())
+//     .then((data) => {
+//       if (data.secure_url !== '') {
+//         const uploadedFileUrl = data.secure_url;
+//         localStorage.setItem('passportUrl', uploadedFileUrl);
+//       }
+//     })
+//     .catch(err => console.error(err));
+// }
+
+
+
+
+
+
+
 
   function handleKeyDown(event) {
  
@@ -120,15 +144,24 @@ setCheckboxes([{
   
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(roomData)
+
     try {
 
-   const response = await api.post('/admin/add-room',{roomData},{
+      const data = new FormData()
+      data.append("file",images)
+      data.append('upload_preset',"mistyvilla")
+      const Imageresponse = await axios.post('https://api.cloudinary.com/v1_1/dvxbonwol/image/upload',data)
+      
+      const imageUrl = Imageresponse.data.url
+  
+      
+   const response = await api.post('/admin/add-room',{roomData,imageUrl},
+   {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("adminToken"),
     }
-   })
-
+   }
+   )
    if(response.data.success)
    {
     toast.success(response.data.message)
@@ -139,7 +172,7 @@ setCheckboxes([{
   }
 } catch (error) {
   console.log(error);
-  toast.error("Something went wwrong")
+  toast.error("Something went wrong")
 }
   }
 
@@ -181,10 +214,11 @@ setCheckboxes([{
                 name="category"
                 id="category"
               >
-                <option value="category" disabled>
+                <option value="category" >
                   Choose a category
                 </option>
-                <option value="deluxe ">Deluxe</option>
+        
+                <option value="deluxe">Deluxe</option>
                 <option value="supreme">Supreme</option>
                 <option value="suite">Suite</option>
               </select>
@@ -216,12 +250,13 @@ setCheckboxes([{
                 Select images
               </label>
               <input
-              onChange={(e)=> setImages(e.target.value)}
+              onChange={(e)=> setImages(e.target.files[0])}
                 className="p-1"
-                type="text"
+                type="file"
+                accept="image/*"
                 autoComplete="off"
                 name="image"
-                id="image"
+                id="fileupload"
                 placeholder="Choose images "
               />
               {/* {errors.password && touched.password ? (

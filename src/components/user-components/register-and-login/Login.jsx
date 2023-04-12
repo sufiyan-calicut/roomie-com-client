@@ -38,6 +38,7 @@ const Login = () => {
       }
     } catch (error) {
       dispatch(hideLoading());
+      toast.error("something went wrong");
       console.error(error);
     }
   };

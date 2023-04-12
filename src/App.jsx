@@ -21,6 +21,7 @@ import OtpReset from "./components/user-components/register-and-login/OtpReset";
 import ResetPasswordForm from "./components/user-components/register-and-login/ResetPasswordForm";
 import DisplayRoomsPage from "./pages/user-pages/rooms/DisplayRoomsPage";
 import AddRoom from "./components/admin-components/room-components/AddRoom";
+import SingleRoom from "./components/user-components/Rooms/SingleRoom";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -47,6 +48,8 @@ function App() {
       <Toaster position="top-center" reverseOrder={false} />
 
       <Routes>
+        <Route path="/single-room-details" element={<SingleRoom />} />
+
         <Route path="/otp" element={<OtpPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<Login />} />

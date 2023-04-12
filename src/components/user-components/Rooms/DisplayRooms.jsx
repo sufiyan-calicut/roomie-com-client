@@ -6,9 +6,13 @@ import img5 from "/images/pexels-photo-3201735.jpeg";
 import img6 from "/images/pexels-photo-7163619.jpeg";
 import img7 from "/images/pexels-photo-6434634 (1).webp";
 import { useEffect, useState } from "react";
+import api from "../../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 function DisplayRooms() {
-  const [products, setProducts] = useState([
+const navigate = useNavigate()
+
+  const [producti, setProducti] = useState([
     {
       id: 1,
       name: "DELUX",
@@ -171,7 +175,8 @@ function DisplayRooms() {
     },
   ]);
 
-  const [holder, setHolder] = useState([...products]);
+  const [products, setProducts] = useState([])
+  const [holder, setHolder] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState(holder.slice(0, 8));
 
   const [roomType, setRoomType] = useState("All");
@@ -181,7 +186,7 @@ function DisplayRooms() {
       return setHolder([...products]);
     } else {
       const display = products.filter((room) => {
-        return room.type == roomType;
+        return room.category == roomType;
       });
       setHolder(display);
     }
@@ -194,30 +199,43 @@ function DisplayRooms() {
     setVisibleProducts(nextVisibleProducts);
   };
 
+  const getData = async () => {
+    await api.get("/admin/get-hotel-data").then((response) => {
+      const data = response.data;
+      setProducts([...data]);
+      setHolder([...data])
+    });
+  };
+  useEffect(() => {
+    setVisibleProducts(products.slice(0, 8));
+    getData();
+  }, []);
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="bg- ml-2 mr-4 mt-7  w-full  h-10 flex items-center font-semibold  justify-start md:gap-2 text-sm md:w-1/2 ">
-          <a className="text-blue-900 flex-1 hover:font-bold focus:font-bold  text-center"
-          onClick={()=>setRoomType("All")}
+          <a
+            className="text-blue-900 flex-1 hover:font-bold focus:font-bold  text-center"
+            onClick={() => setRoomType("All")}
           >
             All
           </a>
           <a
             className="text-blue-800 flex-1 hover:font-bold focus:font-bold text-center "
-            onClick={() => setRoomType("Deluxe")}
+            onClick={() => setRoomType("deluxe")}
           >
             Delux
           </a>
           <a
             className="text-blue-800 flex-1 hover:font-bold focus:font-bold text-center"
-            onClick={() => setRoomType("Suite")}
+            onClick={() => setRoomType("suite")}
           >
             Suite
           </a>
           <a
             className="text-blue-800 flex-1 hover:font-bold focus:font-bold  text-center"
-            onClick={() => setRoomType("Premium")}
+            onClick={() => setRoomType("supreme")}
           >
             Premium
           </a>
@@ -228,37 +246,37 @@ function DisplayRooms() {
         </h2> */}
 
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8  ">
-          {visibleProducts?.map((product) => (
+          {visibleProducts?.map((product,i) => (
             <div
-              key={product.id}
+              key={product?._id}
               className="group relative hover:shadow-lg rounded-md"
             >
               <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80 ">
                 <img
-                  src={product.imageSrc}
-                  alt={product.imageAlt}
+                  src={product?.images}
+                  alt={product?.imageAlt}
                   className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                 />
               </div>
               <div className="mt-4 flex justify-between p-2.5 ">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                    <a href={product.href}>
+                    <a onClick={()=>navigate('/single-room-details')}>
                       <span aria-hidden="true" className="absolute inset-0" />
-                      {product.name} <span> / </span> {product.type}
+                      {product?.roomName} <span> / </span> {product?.category}
                     </a>
                   </h3>
-                  <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                  <p className="mt-1 text-sm text-gray-500">{product?.numberofBeds} beds</p>
                 </div>
                 <p className="text-sm font-medium text-gray-900">
-                  {product.price}
+                  {product?.price}
                 </p>
               </div>
             </div>
           ))}
         </div>
       </div>
-      {visibleProducts?.length != products?.length && (
+      {visibleProducts?.length != holder?.length && (
         <div
           className="flex item-center justify-center mx-auto w-60  bg-white border border-sky-600 rounded-lg py-2 px-4 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50"
           onClick={handleShowMore}

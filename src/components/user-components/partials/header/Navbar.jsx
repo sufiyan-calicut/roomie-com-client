@@ -21,9 +21,9 @@ const Navbar = () => {
       </div>
       <div className="navbar-links cursor-default">
         <a onClick={() => navigate("/")}>Home</a>
+        <a onClick={() => navigate("/display-rooms")}>Rooms</a>
         <a onClick={() => navigate("/about")}>About</a>
         <a onClick={() => navigate("/contact")}>Contact</a>
-        <a onClick={() => navigate("/display-rooms")}>Rooms</a>
       </div>
       <div className="navbar-icons">
         <FontAwesomeIcon icon={faBell} />
