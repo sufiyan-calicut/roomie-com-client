@@ -10,6 +10,7 @@ body {
     background-color: #ffff;
     padding: 0;
     margin: 0;
+    @apply font-semibold
 }
 
 /* .main {
@@ -217,4 +218,34 @@ body a {
     appearance:textfield;
    }
 
+   ::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .rules-div{
+    min-height:13rem;
    
+  }
+  /* .sidebar {
+    --offset: var(--space);
+    flex-grow: 1;
+    flex-basis: 300px;
+    align-self: start;
+    position: sticky;
+    top: var(--offset);
+    background-color: lime;
+    
+  }
+ .component {
+    max-height: calc(100vh - var(--offset) * 2);
+  } */
+
+
+  .hotel-button{
+    @apply border-b  text-gray-900 font-sans font-semibold hover:border-green-800 w-fit mx-10 my-4 cursor-pointer 
+  }
+
+/* Reduce the font size of the alert */
+
+
+

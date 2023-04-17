@@ -15,6 +15,7 @@ function AdminSignIn() {
       const response = await api.post(`/admin/admin-sign-in`, values);
 
       dispatch(hideLoading);
+      console.log("response =>",response)
       if (response.data.success) {
         toast.success(response.data.message);
         localStorage.setItem("adminToken", response.data.data);

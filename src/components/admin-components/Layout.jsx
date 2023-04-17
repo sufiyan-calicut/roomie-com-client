@@ -21,8 +21,8 @@ function Layout({ children }) {
       icon: "ri-user-line",
     },
     {
-      name: "Rooms",
-      path: "/admin/add-room",
+      name: "Hotels",
+      path: "/admin/hotel-management",
       icon: "ri-hotel-bed-line",
     },
     {
@@ -33,7 +33,7 @@ function Layout({ children }) {
   ];
 
   return (
-    <div className="main ">
+    <div className="mainz ">
       <div className="flex">
         <div className="sideBar">
           <div className="sidebar-header">
@@ -96,7 +96,7 @@ function Layout({ children }) {
               </Link>
             </div>
           </div>
-          <div className="layout-body">{children}</div>
+          <div className="layout-body first-letter overflow-auto">{children}</div>
         </div>
       </div>
     </div>

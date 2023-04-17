@@ -22,21 +22,26 @@ import ResetPasswordForm from "./components/user-components/register-and-login/R
 import DisplayRoomsPage from "./pages/user-pages/rooms/DisplayRoomsPage";
 import AddRoom from "./components/admin-components/room-components/AddRoom";
 import SingleRoom from "./components/user-components/Rooms/SingleRoom";
+import HotelSignIn from "./components/hotel-components/HotelSignIn";
+import HotelRegistrationForm from "./components/hotel-components/HotelRegistrationForm";
+import HotelManagement from "./pages/admin-pages/HotelManagement";
+import SingleRequests from "./components/admin-components/room-components/SingleRequests";
+import CongratsMessage from "./components/hotel-components/CongratsMessage";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
 
-  useEffect(() => {
-    window.addEventListener("beforeunload", removeTokenFromLocalStorage);
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", removeTokenFromLocalStorage);
 
-    return () => {
-      window.removeEventListener("beforeunload", removeTokenFromLocalStorage);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", removeTokenFromLocalStorage);
+  //   };
+  // }, []);
 
-  const removeTokenFromLocalStorage = () => {
-    localStorage.removeItem("adminToken");
-  };
+  // const removeTokenFromLocalStorage = () => {
+  //   localStorage.removeItem("adminToken");
+  // };
   return (
     <Router>
       {loading && (
@@ -62,11 +67,19 @@ function App() {
         </Route>
 
         <Route path="/admin" element={<AdminSignIn />} />
-        <Route element={<AdminAuth />}>
-          <Route path="/admin/dashboard" element={<AdminHome />} />
-          <Route path="/admin/userslist" element={<UsersList />} />
-          <Route path="/admin/add-room" element={<AddRoom />} />
-        </Route>
+        <Route path="/admin/hotel-management" element={<HotelManagement />} />
+        <Route path="/admin/single-request" element={<SingleRequests />} />
+        <Route element={<AdminAuth />}></Route>
+        <Route path="/admin/dashboard" element={<AdminHome />} />
+        <Route path="/admin/userslist" element={<UsersList />} />
+        <Route path="/admin/add-room" element={<AddRoom />} />
+
+        <Route path="/hotel" element={<HotelSignIn />} />
+        <Route
+          path="/hotel-register-form"
+          element={<HotelRegistrationForm />}
+        />
+        <Route path="/hotel/greatings" element={<CongratsMessage/>} />
       </Routes>
     </Router>
   );

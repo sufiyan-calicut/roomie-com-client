@@ -4,7 +4,7 @@
     align-items: center;
     background-color: white;
     border-bottom: 2px solid rgb(149 127 243);
-    padding: 17px;
+    padding: 20px;
     
   }
   
@@ -100,4 +100,7 @@
   .dropdown:hover .dropdown-content {
     height: auto;
   }
-  
+  .react-calendar__tile--range{
+    color:white;
+    background-color: rgba(37, 106, 211, 0.87) !important;
+  }

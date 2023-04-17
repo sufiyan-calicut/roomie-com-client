@@ -1,25 +1,24 @@
 import React, { useRef, useState } from "react";
 import Layout from "../Layout";
 import api from "../../../api/axios";
-
 import { toast } from "react-hot-toast";
 import axios from "axios";
 
 function AddRoom() {
-  const formRef = useRef(null)
+  const formRef = useRef(null);
 
-  
   // states of counts
-    let [roomName, setRoomName] = useState("");
+  let [roomName, setRoomName] = useState("");
   let [category, setCategory] = useState("");
   let [price, setPrice] = useState();
-  let [images, setImages] = useState("");
+  let [images, setImages] = useState([]);
   let [numberofBeds, setNumberofBeds] = useState(1);
   let [numberOfRooms, setNumberofRooms] = useState(1);
   let [numberofStayDays, setNumberofStayDays] = useState(1);
   let [allowedGuests, setAllowedGuests] = useState(1);
   let [rules, setRules] = useState([]);
   let [description, setDescription] = useState("");
+  let [url, setUrl] = useState([]);
 
   // check box state
 
@@ -34,8 +33,6 @@ function AddRoom() {
     laundry: false,
   });
 
-  
-  
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
     setCheckboxes((prevCheckboxes) => ({ ...prevCheckboxes, [name]: checked }));
@@ -49,48 +46,11 @@ function AddRoom() {
     }
   };
 
-
-
-
-  const CLOUDINARY_URL = `${import.meta.env.VITE_CLOUDINARY_URL}/image/upload`;
-const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_URL;
-const image = document.querySelector('#fileupload');
-// const handleImages = (e) => {
-
-
-
-//   const file = e.target.files[0];
-//   const formData = new FormData();
-//   formData.append('file', file);
-//   formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-
-//   fetch(CLOUDINARY_URL, {
-//     method: 'POST',
-//     body: formData,
-//   })
-//     .then(response => response.json())
-//     .then((data) => {
-//       if (data.secure_url !== '') {
-//         const uploadedFileUrl = data.secure_url;
-//         localStorage.setItem('passportUrl', uploadedFileUrl);
-//       }
-//     })
-//     .catch(err => console.error(err));
-// }
-
-
-
-
-
-
-
-
   function handleKeyDown(event) {
- 
     if (event.keyCode === 13) {
       const rule = event.target.value;
-      if(!rule){
-return
+      if (!rule) {
+        return;
       }
       // Perform actions with the value, such as updating state
       if (!rules.includes(rule)) {
@@ -101,80 +61,104 @@ return
       event.target.value = ""; // Clear the input field
     }
   }
-  
+
   function deleteRule(index) {
     const filteredRules = rules.filter((_, i) => i !== index);
     setRules(filteredRules);
   }
-  
+
   const roomData = {
     roomName,
     category,
-    price:parseInt(price),
-    images,
-    checkboxe : Object.keys(checkboxes).filter(key => checkboxes[key]) ,
+    price: parseInt(price),
+    url,
+    checkboxe: Object.keys(checkboxes).filter((key) => checkboxes[key]),
     numberofBeds,
     numberOfRooms,
     numberofStayDays,
     allowedGuests,
     rules,
-    description
-  }
+    description,
+  };
 
   const resetForm = () => {
-    console.log("before =>")
-     setNumberofBeds(1)
-    setNumberofRooms(1) 
-    setNumberofStayDays(1) 
-    setAllowedGuests(1) 
-    setRules([])
-setCheckboxes([{
-  locker: false,
-  dryer: false,
-  internet: false,
-  privateKitchen: false,
-  privatePool: false,
-  bathTub: false,
-  antiTheftKey: false,
-  laundry: false,
-}])
+    console.log("before =>");
+    setNumberofBeds(1);
+    setNumberofRooms(1);
+    setNumberofStayDays(1);
+    setAllowedGuests(1);
+    setRules([]);
+    setCheckboxes([
+      {
+        locker: false,
+        dryer: false,
+        internet: false,
+        privateKitchen: false,
+        privatePool: false,
+        bathTub: false,
+        antiTheftKey: false,
+        laundry: false,
+      },
+    ]);
 
-    console.log("after")
-  }
-  
+    console.log("after");
+  };
+
   const handleSubmit = async (event) => {
+    console.log(images.length)
+    let imageUrl = []
     event.preventDefault();
+    const formData = new FormData();
+    for (let i = 0; i < images.length; i++) {
+      formData.append("file", images[i]);
+      formData.append("upload_preset", "mistyvilla");
 
-    try {
+          await axios
+            .post(
+              "https://api.cloudinary.com/v1_1/dvxbonwol/image/upload",
+              formData
+            )
+            .then( (response) => {  
+              const newurl = response.data.url;
+              console.log(newurl)
+              imageUrl = [...imageUrl,newurl]
+              console.log("url",url.length,"=",url)
+            });
+      
+          
+        }
+     
+    
+    console.log(imageUrl)
+    
+    console.log("after loop")
 
-      const data = new FormData()
-      data.append("file",images)
-      data.append('upload_preset',"mistyvilla")
-      const Imageresponse = await axios.post('https://api.cloudinary.com/v1_1/dvxbonwol/image/upload',data)
-      
-      const imageUrl = Imageresponse.data.url
-  
-      
-   const response = await api.post('/admin/add-room',{roomData,imageUrl},
-   {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("adminToken"),
+    const response = await api.post(
+      "/admin/add-room",
+      { roomData,imageUrl },
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("adminToken"),
+        },
+      }
+    );
+    if (response.data.success) {
+      toast.success(response.data.message);
+      formRef.current.reset();
+      resetForm();
+    } else {
+      console.log(error);
+      toast.error(response.data.message);
     }
-   }
-   )
-   if(response.data.success)
-   {
-    toast.success(response.data.message)
-    formRef.current.reset();
-    resetForm()
-     }else{
-    toast.error(response.data.message)
-  }
-} catch (error) {
-  console.log(error);
-  toast.error("Something went wrong")
-}
-  }
+
+
+
+
+
+
+  };
+
+
 
   return (
     <Layout>
@@ -189,9 +173,9 @@ setCheckboxes([{
           <div className="grid grid-cols-4 gap-4 mt-10">
             <div className="input-block  ">
               <label className="input-label font-mono  block ">Room Name</label>
-              
+
               <input
-              onChange={(e)=> setRoomName(e.target.value)}
+                onChange={(e) => setRoomName(e.target.value)}
                 className=" shadow-none p-1  border rounded-full"
                 type="roomName"
                 autoComplete="off"
@@ -208,16 +192,14 @@ setCheckboxes([{
               <label htmlFor="" className="input-label font-mono block ">
                 Category
               </label>
-              <select 
-              onChange={(e)=> setCategory(e.target.value)}
+              <select
+                onChange={(e) => setCategory(e.target.value)}
                 className=" px-4 py-2 border-2 border-gray-300 focus:outline-none"
                 name="category"
                 id="category"
               >
-                <option value="category" >
-                  Choose a category
-                </option>
-        
+                <option value="category">Choose a category</option>
+
                 <option value="deluxe">Deluxe</option>
                 <option value="supreme">Supreme</option>
                 <option value="suite">Suite</option>
@@ -232,7 +214,7 @@ setCheckboxes([{
                 Rent
               </label>
               <input
-              onChange={(e)=> setPrice(e.target.value)}
+                onChange={(e) => setPrice(e.target.value)}
                 className=" p-1 number-input"
                 type="number"
                 autoComplete="off"
@@ -250,13 +232,14 @@ setCheckboxes([{
                 Select images
               </label>
               <input
-              onChange={(e)=> setImages(e.target.files[0])}
-                className="p-1"
+                onChange={(e) => setImages(e.target.files)}
+                className="p-1 w-44"
                 type="file"
                 accept="image/*"
                 autoComplete="off"
                 name="image"
                 id="fileupload"
+                multiple
                 placeholder="Choose images "
               />
               {/* {errors.password && touched.password ? (
@@ -272,9 +255,9 @@ setCheckboxes([{
               </div>
               <div className="h-16  flex justify-center items-center   ">
                 <button
-                type="button"
+                  type="button"
                   onClick={() => {
-                    setNumberofBeds(numberofBeds == 1 ? 1 : numberofBeds - 1)
+                    setNumberofBeds(numberofBeds == 1 ? 1 : numberofBeds - 1);
                   }}
                   className="bg-white sm:rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center font-medium"
                 >
@@ -284,7 +267,7 @@ setCheckboxes([{
                 <h1>{numberofBeds}</h1>
 
                 <button
-                type="button"
+                  type="button"
                   onClick={() => setNumberofBeds(numberofBeds + 1)}
                   className="bg-white rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center"
                 >
@@ -299,7 +282,7 @@ setCheckboxes([{
               </div>
               <div className="h-16  flex justify-center items-center   ">
                 <button
-                type="button"
+                  type="button"
                   onClick={() =>
                     setAllowedGuests(allowedGuests == 1 ? 1 : allowedGuests - 1)
                   }
@@ -310,7 +293,7 @@ setCheckboxes([{
 
                 <h1> {allowedGuests} </h1>
                 <button
-                type="button"
+                  type="button"
                   onClick={() => setAllowedGuests(allowedGuests + 1)}
                   className="bg-white rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center"
                 >
@@ -324,7 +307,7 @@ setCheckboxes([{
               </div>
               <div className="h-16  flex justify-center items-center   ">
                 <button
-                type="button"
+                  type="button"
                   onClick={() =>
                     setNumberofRooms(numberOfRooms == 1 ? 1 : numberOfRooms - 1)
                   }
@@ -335,7 +318,7 @@ setCheckboxes([{
 
                 <h1> {numberOfRooms} </h1>
                 <button
-                type="button"
+                  type="button"
                   onClick={() => setNumberofRooms(numberOfRooms + 1)}
                   className="bg-white rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center"
                 >
@@ -349,7 +332,7 @@ setCheckboxes([{
               </div>
               <div className="h-16  flex justify-center items-center   ">
                 <button
-                type="button"
+                  type="button"
                   onClick={() =>
                     setNumberofStayDays(
                       numberofStayDays == 1 ? 1 : numberofStayDays - 1
@@ -362,7 +345,7 @@ setCheckboxes([{
 
                 <h1> {numberofStayDays} </h1>
                 <button
-                type="button"
+                  type="button"
                   onClick={() => setNumberofStayDays(numberofStayDays + 1)}
                   className="bg-white rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center"
                 >
@@ -373,7 +356,7 @@ setCheckboxes([{
           </div>
 
           <div className="grid grid-cols-4 gap-4 m-10">
-          <div className=" h-12 mt-4 flex items-start justify-start ">
+            <div className=" h-12 mt-4 flex items-start justify-start ">
               <label htmlFor="checkbox" className="flex items-center gap-3">
                 <input
                   checked={checkboxes.locker}
@@ -554,7 +537,7 @@ setCheckboxes([{
               </div>
               <div className=" flex justify-end  px-2">
                 <button
-                onClick={handleSubmit}
+                  onClick={handleSubmit}
                   type="button"
                   className="border-2 outline-none border-green-600 text-green-600 font-medium hover:bg-green-700 hover:text-white duration-500 rounded-lg px-6 py-2"
                 >

@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authReducer";
 import valueReducer from "./valueReducer";
 import alertReducer from "./alertsReducer";
+import  searchSlice  from "./searchSlice";
 
 const store = configureStore({
   reducer: {
     value: valueReducer,
     auth: authReducer,
     alerts: alertReducer,
+    search: searchSlice
   },
 });
 

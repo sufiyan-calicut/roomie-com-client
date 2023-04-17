@@ -1,10 +1,4 @@
-import img1 from "/images/pexels-photo-7163619.jpeg";
-import img2 from "/images/pexels-photo-1571469.jpeg";
-import img3 from "/images/pexels-photo-2506988.jpeg";
-import img4 from "/images/pexels-photo-6527036.webp";
-import img5 from "/images/pexels-photo-3201735.jpeg";
-import img6 from "/images/pexels-photo-7163619.jpeg";
-import img7 from "/images/pexels-photo-6434634 (1).webp";
+import React from "react";
 import { useEffect, useState } from "react";
 import api from "../../../api/axios";
 import { useNavigate } from "react-router-dom";
@@ -12,172 +6,10 @@ import { useNavigate } from "react-router-dom";
 function DisplayRooms() {
 const navigate = useNavigate()
 
-  const [producti, setProducti] = useState([
-    {
-      id: 1,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img1,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Premium",
-    },
-    {
-      id: 2,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img2,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Suite",
-    },
-    {
-      id: 3,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img3,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Deluxe",
-    },
-    {
-      id: 4,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img4,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Premium",
-    },
-    {
-      id: 5,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img5,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Suite",
-    },
-    {
-      id: 6,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img6,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Deluxe",
-    },
-    {
-      id: 7,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img7,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Premium",
-    },
-    {
-      id: 8,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img4,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Suite",
-    },
-    {
-      id: 11,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img1,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Deluxe",
-    },
-    {
-      id: 12,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img2,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Suite",
-    },
-    {
-      id: 13,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img3,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Premium",
-    },
-    {
-      id: 14,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img4,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Deluxe",
-    },
-    {
-      id: 15,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img5,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Suite",
-    },
-    {
-      id: 16,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img6,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Premium",
-    },
-    {
-      id: 17,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img7,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Deluxe",
-    },
-    {
-      id: 18,
-      name: "DELUX",
-      href: "#",
-      imageSrc: img4,
-      imageAlt: "Front of men's DELUX in 2 beds.",
-      price: "₹2999/day",
-      color: "2 beds",
-      type: "Deluxe",
-    },
-  ]);
-
-  const [products, setProducts] = useState([])
+const [products, setProducts] = useState([])
   const [holder, setHolder] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState(holder.slice(0, 8));
+
 
   const [roomType, setRoomType] = useState("All");
 
@@ -211,10 +43,78 @@ const navigate = useNavigate()
     getData();
   }, []);
 
+
   return (
-    <div className="bg-white">
+    <div className="bg-white h-auto w-screen flex ">
+
+    <sidebar className="h-auto md:w-80  border-gray-300 p-6 border-r sticky ">
+
+        <div className="sticky -top-10">
+
+        <h1 className="font-sans font-bold text-lg">Filters</h1>
+        <div className="border-b p-4 h-72">
+          <div>
+            <h4>Popular locations in Calicut</h4>
+            <input
+              type="search"
+              placeholder="search"
+              className="p-2 h-1 rounded-xl"
+            />
+          </div>
+          <div class="flex flex-wrap gap-2 w-60 mt-3">
+            <div class="w-auto p-2 h-9  bg-gray-200">kgm</div>
+            <div class="w-auto p-2 h-9  bg-gray-200">kuttikattoor</div>
+            <div class="w-auto p-2 h-9  bg-gray-200">medical Collage</div>
+            <div class="w-auto p-2 h-9  bg-gray-200">Kovoor</div>
+            <div class="w-auto p-2 h-9  bg-gray-200">Mavoor</div>
+          </div>
+          <h3 className="text-blue-600 font-sans font-semibold mt-4">+ View More</h3>
+        </div>
+        <div className="input-block font-sans p-4">
+          <label htmlFor="" className="input-label block ">
+            Sort By
+          </label>
+          <select
+            onChange={(e) => setCategory(e.target.value)}
+            className=" px-4 py-2 w-48 border  "
+            name="category"
+            id="category"
+          >
+            <option value="other">Popularity</option>
+            <option value="hotel">Guest Ratings</option>
+            <option value="villa">Price Low to High</option>
+            <option value="resort">Price High to Low</option>
+          </select>
+        </div>
+        <div className="p-4 h-auto ">
+          <h1> Hotel Facilites</h1>
+          <div className="flex flex-row items-center gap-4 ">
+            <input type="checkbox" />
+            <label htmlFor="">check 1</label>
+          </div>
+          <div className="flex flex-row items-center gap-4 ">
+            <input type="checkbox" />
+            <label htmlFor="">check 1</label>
+          </div>
+          <div className="flex flex-row items-center gap-4 ">
+            <input type="checkbox" />
+            <label htmlFor="">check 1</label>
+          </div>
+          
+      
+          
+        <h2 className="text-blue-600 font-sans font-semibold mt-4">  +View More</h2>
+        </div>
+      
+        </div>
+    </sidebar>
+   
+    
+
+      <div className="overflow-aut  w-3/4">
+      <div className="bg-whie ">
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <div className="bg- ml-2 mr-4 mt-7  w-full  h-10 flex items-center font-semibold  justify-start md:gap-2 text-sm md:w-1/2 ">
+        {/* <div className="bg- ml-2 mr-4 mt-7  w-full  h-10 flex items-center font-semibold  justify-start md:gap-2 text-sm md:w-1/2 ">
           <a
             className="text-blue-900 flex-1 hover:font-bold focus:font-bold  text-center"
             onClick={() => setRoomType("All")}
@@ -239,17 +139,17 @@ const navigate = useNavigate()
           >
             Premium
           </a>
-        </div>
+        </div> */}
 
         {/* <h2 className="text-2xl font-bold tracking-tight text-gray-900">
           Rooms
         </h2> */}
 
-        <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8  ">
+        <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 justify-center   ">
           {visibleProducts?.map((product,i) => (
             <div
               key={product?._id}
-              className="group relative hover:shadow-lg rounded-md"
+              className="group   relative hover:shadow-lg rounded-md"
             >
               <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80 ">
                 <img
@@ -284,6 +184,11 @@ const navigate = useNavigate()
           Show More
         </div>
       )}
+    </div>
+        <div>
+
+        </div>
+      </div>
     </div>
   );
 }

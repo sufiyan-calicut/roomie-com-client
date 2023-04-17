@@ -123,7 +123,9 @@ function SingleRoom() {
             </div>
           </div>
         </div>
-        <div className="booking  tracking-wider p-6 flex flex-row bg-sky md:flex-col  shadow-lg shadow-slate-300 md:w-2/4 h-1/4  md:h-3/4 border rounded-3xl border-gray-100 ">
+        <div className="booking   sticky top-0 tracking-wider p-6 flex flex-row bg-sky md:flex-col  shadow-lg shadow-slate-300 md:w-/4 h-1/4 bg-black md:h-screen border rounded-3xl border-gray-100 ">
+          <div className="sticky top-0">
+            
           <div className=" flex flex-row justify-between m-4">
             <h1 className="text-xl text-blue-900 ">
               $2999<span className="text-gray-400 font-thin">/day </span>
@@ -158,10 +160,10 @@ function SingleRoom() {
           </div>
           <div className="bg-blac p-4 flex justify-center "><button className="bg-blue-900 shadow-transparent-xl hover:bg-slate-900 duration-300 text-gray-300 w-2/4 p-2 rounded-xl border font-sans tracking-widest font-medium">RESERVE</button></div>
        
-        </div>
+       </div> </div>
         
       </div>
-      <div className="w-full h-auto  p-8  ">
+      <div className="w-3/4 h-auto  p-8  ">
       <div className="border  w- gap-2 rounded-lg h-1/2 p-2 leading-10 ">
             <h1 className="text-xl font-bold border-b  w-fit text-gray-900">
               Rules for guests
