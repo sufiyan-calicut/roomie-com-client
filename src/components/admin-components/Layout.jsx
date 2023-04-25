@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import "./layout.css";
+import React, { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import './layout.css';
 
 function Layout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -11,62 +10,57 @@ function Layout({ children }) {
 
   const Menu = [
     {
-      name: "Home",
-      path: "/admin/dashboard",
-      icon: "ri-home-line",
+      name: 'Home',
+      path: '/admin/dashboard',
+      icon: 'ri-home-line',
     },
     {
-      name: "Users",
-      path: "/admin/userslist",
-      icon: "ri-user-line",
+      name: 'Users',
+      path: '/admin/userslist',
+      icon: 'ri-user-line',
     },
     {
-      name: "Hotels",
-      path: "/admin/hotel-management",
-      icon: "ri-hotel-bed-line",
+      name: 'Hotels',
+      path: '/admin/hotel-management',
+      icon: 'ri-hotel-bed-line',
     },
     {
-      name: "Sales Report",
-      path: "/admin/sales-report",
-      icon: "ri-folder-chart-line",
+      name: 'Sales Report',
+      path: '/admin/sales-report',
+      icon: 'ri-folder-chart-line',
     },
   ];
 
   return (
-    <div className="mainz ">
-      <div className="flex">
-        <div className="sideBar">
-          <div className="sidebar-header">
+    <div className='mainz '>
+      <div className='flex'>
+        <div className='sideBar'>
+          <div className='sidebar-header'>
             <h1>MISTY VILLA</h1>
           </div>
-          <div className="menu">
+          <div className='menu'>
             {Menu.map((menu, i) => {
               const isActive = Location.pathname === menu.path;
               return (
-                <div
-                  key={i}
-                  className={`d-flex menu-item ${
-                    isActive && "active-menu-item"
-                  }`}
-                >
+                <div key={i} className={`d-flex menu-item ${isActive && 'active-menu-item'}`}>
                   <i className={menu.icon}></i>
                   {!collapsed && <Link to={menu.path}>{menu.name}</Link>}
                 </div>
               );
             })}
             <div
-              className="d-flex menu-item "
+              className='d-flex menu-item '
               onClick={() => {
-                localStorage.removeItem("adminToken");
-                navigate("/admin");
+                localStorage.removeItem('adminToken');
+                navigate('/admin');
               }}
             >
-              <i className="ri-logout-circle-r-line"></i>
+              <i className='ri-logout-circle-r-line'></i>
               {!collapsed && (
                 <a
                   onClick={() => {
-                    localStorage.removeItem("adminToken");
-                    navigate("/admin");
+                    localStorage.removeItem('adminToken');
+                    navigate('/admin');
                   }}
                 >
                   Logout
@@ -75,28 +69,22 @@ function Layout({ children }) {
             </div>
           </div>
         </div>
-        <div className="content">
-          <div className="header">
+        <div className='content'>
+          <div className='header'>
             {collapsed ? (
-              <i
-                className="ri-menu-2-line header-action-icon"
-                onClick={() => setCollapsed(false)}
-              ></i>
+              <i className='ri-menu-2-line header-action-icon' onClick={() => setCollapsed(false)}></i>
             ) : (
-              <i
-                className="ri-close-fill header-action-icon"
-                onClick={() => setCollapsed(true)}
-              ></i>
+              <i className='ri-close-fill header-action-icon' onClick={() => setCollapsed(true)}></i>
             )}
 
-            <div className="d-flex align-item-centre px-4">
-              <i className="ri-user-line px-2" style={{ fontSize: "20px" }}></i>
-              <Link to="/profile" className="anchor">
+            <div className='d-flex align-item-centre px-4'>
+              <i className='ri-user-line px-2' style={{ fontSize: '20px' }}></i>
+              <Link to='/profile' className='anchor'>
                 profile
               </Link>
             </div>
           </div>
-          <div className="layout-body first-letter overflow-auto">{children}</div>
+          <div className='layout-body first-letter overflow-auto'>{children}</div>
         </div>
       </div>
     </div>

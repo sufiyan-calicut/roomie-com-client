@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  viewCalendar:false,
+  viewCalendar: false,
   checkInDate: null,
   checkOutDate: null,
   searchData: null,
+  rooms: 1,
+  guest: 1,
 };
 
 export const searchSlice = createSlice({
@@ -23,9 +25,22 @@ export const searchSlice = createSlice({
     setViewCalender: (state, action) => {
       state.viewCalendar = action.payload;
     },
+    addNewRoom: (state) => {
+      state.rooms = state.rooms + 1;
+    },
+    deleteRoom: (state) => {
+      state.rooms = state.rooms - 1;
+    },
+    addNewGuest: (state) => {
+      state.guest = state.guest + 1;
+    },
+    removeGuest: (state) => {
+      state.guest = state.guest - 1;
+    },
   },
 });
 
-export const { setCheckinDate, setCheckoutDate,setSearchData,setViewCalender } = searchSlice.actions;
+export const { setCheckinDate, setCheckoutDate, setSearchData, setViewCalender, addNewRoom, deleteRoom, addNewGuest, removeGuest } =
+  searchSlice.actions;
 
 export default searchSlice.reducer;

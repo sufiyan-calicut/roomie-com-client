@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { hideLoading, showLoading } from "../../../reduxToolkit/alertsReducer";
-import api from "../../../api/axios";
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { hideLoading, showLoading } from '../../../reduxToolkit/alertsReducer';
+import api from '../../../api/axios';
 // import { FirebaseContext } from "../../../contextStore/FirebaseContext";
 
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const userData = {
     name,
     email,
@@ -26,27 +26,27 @@ const Register = () => {
 
     try {
       if (password != confirmPassword) {
-        return toast.error("password do not match");
+        return toast.error('password do not match');
       }
       dispatch(showLoading());
-      const response = await api.post(`/user/sendOtp`, userData);
+      const response = await api.post('/user/sendOtp', userData);
       dispatch(hideLoading());
 
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate("/otp");
+        navigate('/otp');
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
       dispatch(hideLoading());
-      toast.error("something went wrong", error);
+      toast.error('something went wrong', error);
       console.log(error);
     }
   };
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      navigate("/");
+    if (localStorage.getItem('token')) {
+      navigate('/');
     }
   }, []);
   // h-screen
@@ -139,7 +139,7 @@ const Register = () => {
             Register
           </button>
           <p className="text-white ">
-            already have an account?{" "}
+            already have an account?{' '}
             <Link to="/login" className="text-white underline">
               Log in
             </Link>

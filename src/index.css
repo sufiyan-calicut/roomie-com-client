@@ -246,6 +246,9 @@ body a {
   }
 
 /* Reduce the font size of the alert */
+.editorError-foreground {
+  border-bottom: 2px solid #00bfff;
+}
 
 
 
