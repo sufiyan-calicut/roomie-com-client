@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const adminApi = axios.create({
-  baseURL: 'http://localhost:4000/api/admin',
+  baseURL: 'https://roomie-server.onrender.com/api/admin',
 });
 adminApi.interceptors.request.use(
   (config) => {
