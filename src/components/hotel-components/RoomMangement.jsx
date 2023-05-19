@@ -28,7 +28,7 @@ function RoomMangement() {
   }
   return (
     <div className=''>
-      <div className='flex bg-gray-100'>
+      <div className='flex mx-5 bg-gray-100'>
         <button className={`${selected == 'availableRooms' ? 'border bg-gray-600 rounded-t-md text-gray-100 border-gray-200 border-b-0 p-4' : 'border border-gray-200 p-4'}`} onClick={() => handleButtonClick('availableRooms')}>
           available Rooms
         </button>
@@ -39,7 +39,7 @@ function RoomMangement() {
           Listed Rooms
         </button>
       </div>
-      <div className=' w-screen h-screen'>
+      <div className='h-screen'>
         {divToRender}
       </div>
     </div>

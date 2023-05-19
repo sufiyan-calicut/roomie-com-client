@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
-import api from "../../api/axios";
-import { setUser } from "../redux/userSlice";
-import { hideLoading, showLoading } from "../redux/alertReducer";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router-dom';
+import api from '../../api/axios';
+import { userApi } from '../../api/userApi';
+import { setUser } from '../redux/userSlice';
+import { hideLoading, showLoading } from '../redux/alertReducer';
 function ProtectedRoute(props) {
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -11,26 +12,18 @@ function ProtectedRoute(props) {
   const getUser = async () => {
     try {
       dispatch(showLoading());
-      const response = await api.post(
-        "/admin/get-user-info-by-id",
-        { token: localStorage.getItem("token") },
-        {
-          headers: {
-            Autherization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      );
+      const response = await userApi.post('/admin/get-user-info-by-id');
       dispatch(hideLoading());
       if (response.data.success) {
         dispatch(setUser(response.data.data));
       } else {
         localStorage.clear();
-        navigate("/login");
+        navigate('/login');
       }
     } catch (error) {
       localStorage.clear();
       dispatch(hideLoading());
-      navigate("/login");
+      navigate('/login');
     }
   };
   useEffect(() => {
@@ -39,10 +32,11 @@ function ProtectedRoute(props) {
     }
   }, [user]);
 
-  if (localStorage.getItem("token")) {
+  if (localStorage.getItem('token')) {
+    // eslint-disable-next-line react/prop-types
     return props.children;
   } else {
-    return <Navigate to="/login" />;
+    return <Navigate to='/login' />;
   }
 }
 

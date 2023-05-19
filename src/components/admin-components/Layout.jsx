@@ -25,6 +25,11 @@ function Layout({ children }) {
       icon: 'ri-hotel-bed-line',
     },
     {
+      name: 'Bookings',
+      path: '/admin/booking-management',
+      icon: 'ri-book-open-line',
+    },
+    {
       name: 'Sales Report',
       path: '/admin/sales-report',
       icon: 'ri-folder-chart-line',
@@ -36,7 +41,7 @@ function Layout({ children }) {
       <div className='flex'>
         <div className='sideBar'>
           <div className='sidebar-header'>
-            <h1>MISTY VILLA</h1>
+            <h1>Roomie.com</h1>
           </div>
           <div className='menu'>
             {Menu.map((menu, i) => {

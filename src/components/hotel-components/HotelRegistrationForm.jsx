@@ -1,17 +1,21 @@
 import React, { useRef, useState } from 'react';
-import hotelApi from '../../api/hotelApi';
+import { hotelApi } from '../../api/hotelApi';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { showLoading, hideLoading } from '../../reduxToolkit/alertsReducer';
+import { useDispatch } from 'react-redux';
 
 function HotetlRegistrationForm() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const formRef = useRef(null);
 
   // states of counts
-  let [hotelName, setHotelName] = useState('');
-  let [email, setEmail] = useState('');
+  let [hotelName, setHotelName] = useState();
+  let [email, setEmail] = useState();
   let [phoneNumber, setPhoneNumber] = useState();
+  let [price, setPrice] = useState();
 
   let [place, setPlace] = useState('');
   let [city, setCity] = useState('');
@@ -77,6 +81,7 @@ function HotetlRegistrationForm() {
     email,
     phoneNumber,
     place,
+    price,
     city,
     state,
     pincode,
@@ -91,7 +96,6 @@ function HotetlRegistrationForm() {
   };
 
   const resetForm = () => {
-    console.log('before =>');
     setRooms(1);
     setAllowedGuests(1);
     setKitchen(1);
@@ -109,22 +113,29 @@ function HotetlRegistrationForm() {
         laundry: false,
       },
     ]);
-
-    console.log('after');
   };
 
   const handleSubmit = async (event) => {
+    if (Object.values(hotelData).some((value) => !value)) {
+      toast.error('complete all field before submission');
+      return;
+    }
+    dispatch(showLoading());
+
     let imageUrl = [];
     event.preventDefault();
     const formData = new FormData();
     for (let i = 0; i < images.length; i++) {
       formData.append('file', images[i]);
-      formData.append('upload_preset', 'mistyvilla');
+      formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
 
-      await axios.post('https://api.cloudinary.com/v1_1/dvxbonwol/image/upload', formData).then((response) => {
-        const newurl = response.data.url;
-        imageUrl = [...imageUrl, newurl];
-      });
+      await axios
+        .post(import.meta.env.VITE_CLOUDINARY_URL, formData)
+        .then((response) => {
+          const newurl = response.data.url;
+          imageUrl = [...imageUrl, newurl];
+        })
+        .catch((error) => console.error('error inside uploading to cdn', error));
     }
 
     const response = await hotelApi.post('/newRegistration', {
@@ -132,11 +143,13 @@ function HotetlRegistrationForm() {
       imageUrl,
     });
     if (response.data.success) {
+      dispatch(hideLoading());
       toast.success(response.data.message);
       formRef.current.reset();
       resetForm();
       navigate('/hotel/greatings');
     } else {
+      dispatch(hideLoading());
       toast.error(response.data.message);
     }
   };
@@ -195,9 +208,9 @@ function HotetlRegistrationForm() {
                     className=' p-1 number-input'
                     type='number'
                     autoComplete='off'
-                    name='pincode'
-                    id='pincode'
-                    placeholder='pincode'
+                    name='phoneNumber'
+                    id='phoneNumber'
+                    placeholder='phoneNumber'
                   />
                 </div>
                 <div className='input-block  '>
@@ -270,6 +283,20 @@ function HotetlRegistrationForm() {
                     id='fileupload'
                     multiple
                     placeholder='Choose images '
+                  />
+                </div>
+                <div className='input-block '>
+                  <label htmlFor='rent' className='input-label font-mono block'>
+                    Price / room
+                  </label>
+                  <input
+                    onChange={(e) => setPrice(e.target.value)}
+                    className=' p-1 number-input'
+                    type='number'
+                    autoComplete='off'
+                    name='price'
+                    id='price'
+                    placeholder='rent per day'
                   />
                 </div>
               </div>

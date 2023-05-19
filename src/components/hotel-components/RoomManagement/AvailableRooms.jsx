@@ -1,10 +1,7 @@
-
-import React from 'react'
+import React from 'react';
 
 function AvailableRooms() {
-  return (
-    <div>AvailableRooms</div>
-  )
+  return <div>AvailableRooms</div>;
 }
 
-export default AvailableRooms
+export default AvailableRooms;

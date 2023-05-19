@@ -1,11 +1,14 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import hotelApi from '../../../api/hotelApi';
+import { hotelApi } from '../../../api/hotelApi';
 import { toast } from 'react-hot-toast';
 import { useRef } from 'react';
+import { hideLoading, showLoading } from '../../../reduxToolkit/alertsReducer';
+import { useDispatch } from 'react-redux';
 
 function AddNewRoom() {
   const formRef = useRef(null);
+  const dispatch = useDispatch();
   let [images, setImages] = useState([]);
   let [roomNumber, setRoomNumber] = useState();
   let [amnities, setAmnities] = useState({
@@ -40,8 +43,12 @@ function AddNewRoom() {
   };
 
   const handleSubmit = async (event) => {
-    let imageUrl = [];
     event.preventDefault();
+    if (images.length == 0 || !roomNumber || amnities.length == 0) {
+      return toast.error('ensure all data is given');
+    }
+    let imageUrl = [];
+    dispatch(showLoading());
     const formData = new FormData();
     for (let i = 0; i < images.length; i++) {
       formData.append('file', images[i]);
@@ -55,7 +62,7 @@ function AddNewRoom() {
     let Data = {
       roomNumber,
       amnities: Object.keys(amnities).filter((key) => amnities[key]),
-      hotelId: localStorage.getItem('Id'),
+      hotelId: localStorage.getItem('hotelId'),
     };
 
     await hotelApi
@@ -64,15 +71,19 @@ function AddNewRoom() {
         imageUrl,
       })
       .then((response) => {
-        console.log(response);
+        dispatch(hideLoading());
         if (response.data.success) {
           toast.success(response.data.message);
-          formRef.current.reset(); 
+          formRef.current.reset();
           resetForm();
-          // navigate('/hotel/greatings');
         } else {
           toast.error(response.data.message);
         }
+      })
+      .catch((error) => {
+        dispatch(hideLoading());
+        console.error(error);
+        toast.error(error.response.data.message);
       });
   };
 
@@ -82,7 +93,12 @@ function AddNewRoom() {
         <form ref={formRef}>
           <div className='justify-center  grid-cols-2 border p-6 rounded-md my-10 mx-10 md:grid-cols-3 gap-4 md:m-10 '>
             <label htmlFor=''>RoomNumber</label>
-            <input type='text' onChange={(e) => setRoomNumber(e.target.value)} className='text-center m-2 ' />
+            <input
+              type='text'
+              value={roomNumber}
+              onChange={(e) => setRoomNumber(e.target.value)}
+              className='text-center m-2 '
+            />
             {/* <label>Number of Beds</label>
             <input type='text' className='text-center m-2'  onChange={(e)=>setBeds(e.target.value)}/> */}
 

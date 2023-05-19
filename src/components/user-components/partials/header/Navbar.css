@@ -3,9 +3,17 @@
     justify-content: space-between;
     align-items: center;
     background-color: white;
-    border-bottom: 2px solid rgb(149 127 243);
+    border-bottom: 1px solid rgb(231, 227, 227);
     padding: 20px;
+    /* margin-bottom: 60px; */
+    top: 0 !important;
     
+  }
+  .searchInput{
+    border: 1px solid rgb(221 204 204 / 84%) !important ; 
+  }
+  .searchInput :focus{
+    border: 1px solid rgb(221 204 204 / 84%) !important ; 
   }
   
   .navbar-logo img {

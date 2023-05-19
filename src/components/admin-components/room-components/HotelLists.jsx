@@ -10,16 +10,12 @@ function HotelLists() {
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
-    console.log('inside Effect');
     adminApi.get('/get-all-hotelData').then((response) => {
-      console.log(response);
       setHotels(response.data.hotelData);
     });
   }, []);
 
-  useEffect(() => {
-    console.log('hotels updated: ', hotels);
-  }, [hotels]);
+  useEffect(() => {}, [hotels]);
 
   const handleSingleData = (hotelID) => {
     const Data = hotels.filter((hotel) => {
@@ -29,18 +25,15 @@ function HotelLists() {
     setPopup(true);
   };
 
-  const handleStatus = (status,hotelID) => {
-    console.log("1",showToast)
+  const handleStatus = (status, hotelID) => {
     if (!showToast) {
-      console.log("2")
       setShowToast(true);
 
       const confirmChangeStatus = async () => {
         try {
           await adminApi.put('/change-hotel-status', { hotelID, status }).then((response) => {
-            console.log(response.data);
             setHotels(response.data.hotelData);
-            toast.success(response.data.message)
+            toast.success(response.data.message);
             // toast.success(response.data);
           });
         } catch (error) {
@@ -102,20 +95,24 @@ function HotelLists() {
             <div className=' w-1/6'>{hotel?.email}</div>
             <div className=' w-1/6'>{hotel?.phoneNumber}</div>
             <div>
-              {hotel.status == 'Block' ? (
+              {hotel.status == 'Block' && (
                 <button
                   className=' w-1/6 text-green-700 hover:underline'
                   onClick={() => handleStatus('Active', hotel._id)}
                 >
                   Activate
                 </button>
-              ) : (
+              )}
+              {hotel.status == 'Active' && (
                 <button
                   className=' w-1/6 text-red-700 hover:underline'
                   onClick={() => handleStatus('Block', hotel._id)}
                 >
                   Block
                 </button>
+              )}
+              {hotel && ['Rejected', 'Pending'].includes(hotel.status) && (
+                <p className=' w-1/6 text-blue-700 '>{hotel?.status}</p>
               )}
             </div>
             <div onClick={() => handleSingleData(hotel._id)}>

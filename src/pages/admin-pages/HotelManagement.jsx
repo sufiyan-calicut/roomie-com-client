@@ -4,6 +4,7 @@ import Dashboard from '../../components/admin-components/room-components/Dashboa
 import NewRequests from '../../components/admin-components/room-components/NewRequests';
 import HotelLists from '../../components/admin-components/room-components/HotelLists';
 import HotelRanks from '../../components/admin-components/room-components/HotelRanks';
+import DonutChart from './DonutChart';
 
 function HotelManagement() {
   const [selectedButton, setSelectedButton] = useState('dashboard');
@@ -56,18 +57,7 @@ function HotelManagement() {
           >
             Hotels list
           </div>
-          <div
-            className={selectedButton === 'ranks' ? 'hotel-button border-green-800 ' : 'hotel-button'}
-            onClick={() => handleButtonClick('ranks')}
-          >
-            Hotel Ranks
-          </div>
-          <div
-            className={selectedButton === 'other' ? 'hotel-button border-green-800 ' : 'hotel-button'}
-            onClick={() => handleButtonClick('other')}
-          >
-            Other
-          </div>
+          
         </div>
 
         {componentToRender}

@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from '../../../reduxToolkit/alertsReducer';
-import api from '../../../api/axios';
-// import { FirebaseContext } from "../../../contextStore/FirebaseContext";
+import { userApi } from '../../../api/userApi';
 
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [name, setName] = useState('');
+  const [place, setPlace] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const userData = {
     name,
+    place,
     email,
     phone,
     password,
@@ -29,7 +30,7 @@ const Register = () => {
         return toast.error('password do not match');
       }
       dispatch(showLoading());
-      const response = await api.post('/user/sendOtp', userData);
+      const response = await userApi.post('/sendOtp', userData);
       dispatch(hideLoading());
 
       if (response.data.success) {
@@ -41,110 +42,90 @@ const Register = () => {
     } catch (error) {
       dispatch(hideLoading());
       toast.error('something went wrong', error);
-      console.log(error);
+      console.error(error);
     }
   };
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      navigate('/');
-    }
-  }, []);
-  // h-screen
+
   return (
-    <div className="  flex items-center justify-center form-main">
-      <div className="flex flex-col justify-center items-center shadow-md  form">
-        <form onSubmit={sendOtp} className="w-72  max-w-sm">
-          <h2 className="text-lg font-medium mb-6 text-purple-400 font-serif  ">
-            Sign Up
-          </h2>
-          <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-gray-300 font-medium mb-1 text-sm"
-            >
-              name:
-            </label>
+    <div className='bg-gradient-to-r from-blue-900 to-slate-900 w-screen h-screen flex items-center justify-center '>
+      <div className='flex pb-10 p-6 bg-gray-100 items-center justify-center  flex-col h-auto w-auto  rounded-lg shadow-lg '>
+        <h1 className='m-6 font-semibold text-blue-900 text-xl'>SIGN UP</h1>
+        <form className='p-4 grid grid-cols-2 gap-3' onSubmit={sendOtp}>
+          <div>
+            <label className='block mb-2 '>Name </label>
             <input
-              type="name"
+              className='block mb-3  text-center w-full '
+              type='text'
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="hidden sm:flex items-center w-72 text-left space-x-3 px-4 h-12 bg-white ring-1 ring-slate-900/10 hover:ring-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-700 shadow-sm rounded-lg text-slate-400 dark:bg-slate-800 dark:ring-0 dark:text-slate-400 dark:highlight-white/5 dark:hover:bg-slate-900"
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-300 font-medium mb-1 text-sm"
-            >
-              email:
-            </label>
+          <div>
+            <label className='block mb-2 '>Place </label>
             <input
-              type="email"
+              className='block mb-3  text-center w-full '
+              type='text'
+              value={place}
+              onChange={(e) => setPlace(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label className='block mb-2 '>Email </label>
+            <input
+              className='block mb-3  text-center w-full '
+              type='email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="hidden sm:flex items-center w-72 text-left space-x-3 px-4 h-12 bg-white ring-1 ring-slate-900/10 hover:ring-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-700 shadow-sm rounded-lg text-slate-400 dark:bg-slate-800 dark:ring-0 dark:text-slate-400 dark:highlight-white/5 dark:hover:bg-slate-900"
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="phone"
-              className="block text-gray-300 font-medium mb-1 text-sm"
-            >
-              phone:
-            </label>
+          <div>
+            <label className='block mb-2 '>Phone </label>
             <input
-              type="text"
+              className='block mb-3  text-center w-full '
+              type='text'
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
-              className="hidden sm:flex items-center w-72 text-left space-x-3 px-4 h-12 bg-white ring-1 ring-slate-900/10 hover:ring-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-700 shadow-sm rounded-lg text-slate-400 dark:bg-slate-800 dark:ring-0 dark:text-slate-400 dark:highlight-white/5 dark:hover:bg-slate-900"
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-gray-300 font-medium mb-1 text-sm"
-            >
-              Password:
-            </label>
+          <div>
+            <label className='block mb-2  '>Password </label>
             <input
-              type="password"
+              className='block mb-3 text-center w-full'
+              type='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="hidden sm:flex items-center w-72 text-left space-x-3 px-4 h-12 bg-white ring-1 ring-slate-900/10 hover:ring-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-700 shadow-sm rounded-lg text-slate-400 dark:bg-slate-800 dark:ring-0 dark:text-slate-400 dark:highlight-white/5 dark:hover:bg-slate-900"
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-gray-300 font-medium mb-1 text-sm "
-            >
-              confirm password:
-            </label>
+
+          <div>
+            {' '}
+            <label className='block mb-2  '>Confirm Password </label>
             <input
-              type="password"
+              className='block mb-3 text-center w-full'
+              type='password'
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="hidden sm:flex items-center w-72 text-left space-x-3 px-4 h-12 bg-white ring-1 ring-slate-900/10 hover:ring-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-700 shadow-sm  text-slate-400 dark:bg-slate-800 dark:ring-0 dark:text-slate-400 rounded-lg dark:highlight-white/5 dark:hover:bg-slate-900"
             />
           </div>
-          <button
-            type="submit"
-            className="bg-gray-900 text-gray-300 px-4 py-1 rounded-md hover:bg-blue-900 transition-colors duration-300 ease-in-out"
-          >
-            Register
-          </button>
-          <p className="text-white ">
-            already have an account?{' '}
-            <Link to="/login" className="text-white underline">
-              Log in
-            </Link>
-          </p>
+          <div></div>
+          <div>
+            <button className='text-white w-full text-sm bg-blue-700 mt-2  py-2 px-3 rounded-md  hover:text-white  hover:bg-blue-900  transition duration-500'>
+              REGISTER
+            </button>
+          </div>
         </form>
+        <p>
+          Already have an account?
+          <Link to='/login' className='text-blue-700 ml-1 underline'>
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );

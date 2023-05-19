@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import api from "../../../api/axios";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { userApi } from '../../../api/userApi';
+import { showLoading, hideLoading } from '../../../reduxToolkit/alertsReducer';
+import { useDispatch } from 'react-redux';
 
 const OtpPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [otp, setOtp] = useState();
   const [showResend, setShowResend] = useState(false);
   const [countdown, setCountdown] = useState(30);
@@ -23,18 +27,25 @@ const OtpPage = () => {
 
   const handleResendOtp = async () => {
     try {
-      const response = await api.post(`/user/resendOtp`);
+      dispatch(showLoading());
+      const response = await userApi.post('/resendOtp');
+
       if (response.data.success) {
+        dispatch(hideLoading());
         toast.success(response.data.message);
 
         // code to resend OTP
         setShowResend(false);
         setCountdown(60);
       } else {
+        dispatch(hideLoading());
+
         toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error("unable to send otp ");
+      dispatch(hideLoading());
+
+      toast.error('unable to send otp ');
     }
   };
 
@@ -44,61 +55,45 @@ const OtpPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await api.post(`/user/verifyOtp`, userOtp);
+    dispatch(showLoading());
+    const response = await userApi.post('/verifyOtp', userOtp);
 
     if (response.data.success) {
+      dispatch(hideLoading());
+
       toast.success(response.data.message);
-      navigate("/login");
+      navigate('/login');
     } else {
+      dispatch(hideLoading());
+
       toast.error(response.data.message);
     }
   };
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      navigate("/");
-    }
-  }, []);
+
   return (
-    <div className="  flex items-center justify-center form-main-login">
-      <div className="flex flex-col justify-center items-center shadow-md  form-login">
-        <form onSubmit={handleSubmit} className="w-72  max-w-sm">
-          <h2 className="text-lg font-medium mb-6 text-purple-400 font-serif ">
-            Enter your otp
-          </h2>
+    <div className='bg-gradient-to-r from-blue-900 to-slate-900 w-screen h-screen flex items-center justify-center '>
+      <div className='flex p-6 bg-gray-100 items-center justify-center  flex-col h- w-80  rounded-lg shadow-lg '>
+        <h1 className='m-2 font-semibold text-blue-900 text-xl'>ENTER OTP</h1>
+        <form className='p-4  ' onSubmit={handleSubmit}>
+          <label className='block mb-2 '>Otp </label>
+          <input
+            className='block mb-3  text-center w-full number-input '
+            type='number'
+            value={otp}
+            onChange={handleOtpChange}
+            required
+          />
 
-          <div className="mb-4">
-            <label
-              htmlFor="otp"
-              className="block text-gray-300 font-medium mb-1 text-sm"
-            >
-              otp:
-            </label>
-            <input
-              style={{
-                WebkitAppearance: "none",
-                margin: 0,
-              }}
-              type="number"
-              value={otp}
-              onChange={handleOtpChange}
-              required
-              className="hidden sm:flex items-center w-72 text-left space-x-3 px-4 h-12 bg-white ring-1 ring-slate-900/10 hover:ring-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-700 shadow-sm rounded-lg text-slate-400 dark:bg-slate-800 dark:ring-0 dark:text-slate-400 dark:highlight-white/5 dark:hover:bg-slate-900"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="bg-gray-900 text-gray-300 px-4 py-1 rounded-md hover:bg-blue-900 transition-colors duration-300 ease-in-out"
-          >
-            submit
+          <button className='text-white  text-sm bg-blue-700 mt-2  py-2 px-3 rounded-md  hover:text-white  hover:bg-blue-900  transition duration-500'>
+            SUBMIT
           </button>
           <div>
             {showResend ? (
-              <button className="text-white" onClick={handleResendOtp}>
+              <button className='text-blue-800 hover:underline float-right mt-4' onClick={handleResendOtp}>
                 Resend OTP
               </button>
             ) : (
-              <p className="text-white">Resend OTP in {countdown} seconds</p>
+              <p className=' mt-4'>Resend OTP in {countdown} seconds</p>
             )}
           </div>
         </form>

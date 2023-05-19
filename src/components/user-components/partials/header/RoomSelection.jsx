@@ -1,37 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNewGuest, addNewRoom, deleteRoom, removeGuest } from '../../../../reduxToolkit/searchSlice';
 
 function RoomSelection() {
-  console.log('helllo my');
-  const [roomCount, setRoomCount] = useState(1);
-  const [guestCounts, setGuestCounts] = useState([1]);
+  const dispatch = useDispatch();
+  const divRef = useRef(null);
+  const [showDiv, setShowDiv] = useState(true);
+  const search = useSelector((state) => state.search);
+  const roomCount = search.roomCounts;
+  const guestCounts = [...search.guestCounts];
+
+  
+
 
   const handleAddRoom = (e) => {
     e.stopPropagation();
-
-    setRoomCount(roomCount + 1);
-    setGuestCounts([...guestCounts, 1]);
+    if (roomCount < 6) dispatch(addNewRoom());
   };
 
   const handleDeleteRoom = (e) => {
     e.stopPropagation();
-    if (roomCount > 1) {
-      setRoomCount(roomCount - 1);
-      setGuestCounts(guestCounts.slice(0, -1));
-    }
+    if (roomCount > 1) dispatch(deleteRoom());
   };
 
   const handleAddGuest = (index) => {
-    const newGuestCounts = [...guestCounts];
-    newGuestCounts[index] += 1;
-    setGuestCounts(newGuestCounts);
+    if (guestCounts[index] < 3) dispatch(addNewGuest(index));
   };
 
   const handleRemoveGuest = (index) => {
-    const newGuestCounts = [...guestCounts];
-    if (newGuestCounts[index] > 1) {
-      newGuestCounts[index] -= 1;
-      setGuestCounts(newGuestCounts);
-    }
+    if (guestCounts[index] > 1) dispatch(removeGuest(index));
   };
 
   const rooms = [];
@@ -70,21 +67,25 @@ function RoomSelection() {
   }
 
   return (
-    <div className='absolute bg-white border shadow-lg rounded-md w-64 h-auto mt-10 z-10'>
-      <div className='flex justify-between items-center border-b p-2 font-semibold text-md text-gray-600'>
-        <h3>Rooms</h3>
-        <h3>Guests</h3>
-      </div>
+    <div className='absolute bg-white   rounded-md w-64 h-auto  z-10' onClick={(e) => e.stopPropagation()}>
+      {showDiv && (
+        <div ref={divRef} className='bg-blac  shadow-lg border'>
+          <div className='flex justify-between items-center border-b p-2 font-semibold text-md text-gray-600'>
+            <h3>Rooms</h3>
+            <h3>Guests</h3>
+          </div>
 
-      {rooms}
-      <div className='flex items-center px-2 h-14 gap-4 font-sm text-sm text-gray-600'>
-        <div className={'hover:text-red-700 w-2/4 '} onClick={handleDeleteRoom}>
-          Delete Room
+          {rooms}
+          <div className='flex items-center px-2 h-14 gap-4 font-sm text-sm text-gray-600'>
+            <div className={'hover:text-red-700 w-2/4 '} onClick={handleDeleteRoom}>
+              Delete Room
+            </div>
+            <div className={'hover:text-blue-700 w-2/4'} onClick={handleAddRoom}>
+              Add Room
+            </div>
+          </div>
         </div>
-        <div className={'hover:text-blue-700 w-2/4'} onClick={handleAddRoom}>
-          Add Room
-        </div>
-      </div>
+      )}
     </div>
   );
 }

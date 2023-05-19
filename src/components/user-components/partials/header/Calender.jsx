@@ -1,55 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Calendar } from 'react-calendar';
-import { useDispatch, useSelector } from 'react-redux';
-import {setCheckinDate, setCheckoutDate} from '../../../../reduxToolkit/searchSlice';
-
+import { useDispatch } from 'react-redux';
+import { setCheckinDate, setCheckoutDate } from '../../../../reduxToolkit/searchSlice';
 import 'react-calendar/dist/Calendar.css';
 import './Navbar.css';
 
 function MyCalendar() {
   const dispatch = useDispatch();
-  const searchData = useSelector((state) => state.search);
-  console.log(searchData,'search data');
+  const [date, setDate] = useState([]);
 
-  const [value, onChange] = useState(null);
-  const startDate = value?.[0];
-  const endDate = value?.[1];
-  const startDay = startDate ? startDate.getDate() : null;
-  const endDay = endDate ? endDate.getDate() : null;
-  const startDayName = startDate ? startDate.toLocaleString('default', { weekday: 'long' }) : null;
-  const endDayName = endDate ? endDate.toLocaleString('default', { weekday: 'long' }) : null;
-  const startMonthName = startDate ? startDate.toLocaleString('default', { month: 'long' }) : null;
-  const endMonthName = endDate ? endDate.toLocaleString('default', { month: 'long' }) : null;
-  const startYear = startDate ? startDate.getFullYear() : null;
-  const endYear = endDate ? endDate.getFullYear() : null;
+  const handleDateChange = (selectedDates) => {
+    const [checkIn, checkOut] = selectedDates;
+    if (checkIn && checkOut) {
+      const checkInDate = checkIn.toLocaleString('default', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+      });
+      const checkOutDate = checkOut.toLocaleString('default', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+      });
+      dispatch(setCheckinDate(checkInDate));
+      dispatch(setCheckoutDate(checkOutDate));
+    }
+    setDate(selectedDates);
+  };
 
-  const checkIn = {startDay,startDayName,startMonthName,startYear};
-  const checkOut = {endDay,endDayName,endMonthName,endYear};
-
-  console.log(checkIn,'Checkin');
-  console.log(checkOut,'checkOut');
-  console.log(startDay, startDayName, startMonthName, startYear, '<< start >>', endDay, endDayName, endMonthName, endYear);
-
-  useEffect(()=>{
-    dispatch(setCheckinDate(checkIn));
-    dispatch(setCheckoutDate(checkOut));
-  },[value]);
-  
-
-  console.log(searchData,'search data last');
- 
+  const today = new Date();
+  const minDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
   return (
-    <Calendar  className={'selected fixed z-10'}
-      onChange={onChange}
-      value={value}
+    <Calendar
+      className="selected left-0 right-0 mx-auto mt- absolute z-10 w-96 overflow-auto tracking-tight"
+      onChange={handleDateChange}
+      value={date}
       activeStartDate={new Date()}
-      nextLabel="Next"
-      next2Label="Go"
-      prev2Label="Back"
-      prevLabel="prev"
       showDoubleView
       selectRange
+      minDate={minDate}
     />
   );
 }

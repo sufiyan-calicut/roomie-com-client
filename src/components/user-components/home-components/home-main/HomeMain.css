@@ -1,6 +1,8 @@
 .coverpic {
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 10%);
+  /* background-color: #0eb4ca; */
+  border-radius: 5px;
+  height: 20rem;
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 10%); */
   /* min-height: 300px; */
 }
 
@@ -22,6 +24,6 @@
     color: rgba(128, 128, 128, 0.432);
   }
   .welcome-text{
-    color: #0d118e;;
+    color: #0eb4ca;;
     font-family: Brush Script Std;
   }
