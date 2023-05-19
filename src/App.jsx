@@ -35,7 +35,6 @@ import PageNoteFount from './components/pageNotFound/PageNoteFount';
 import Wallet from './components/user-components/wallet/Wallet';
 import MobileScreenDisplayRooms from './components/user-components/Rooms/MobileScreenDisplayRooms';
 
-
 function App() {
   const { loading } = useSelector((state) => state.alerts);
   const [isMobile, setIsMobile] = useState(false);
