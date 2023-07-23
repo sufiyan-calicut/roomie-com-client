@@ -18,7 +18,7 @@ function BookingHistory() {
         dispatch(hideLoading());
       } catch (error) {
         dispatch(hideLoading());
-        console.error(error);
+
       }
     }
 
@@ -32,7 +32,7 @@ function BookingHistory() {
         setBookings(response.data.bookings);
       })
       .catch((error) => {
-        console.error(error);
+
       });
   };
   return (

@@ -17,7 +17,6 @@ const Sales = () => {
         setData(response.data);
       })
       .catch((error) => {
-        console.error(error);
         toast.error(error.response.data.message);
       });
   }, []);
@@ -38,7 +37,6 @@ const Sales = () => {
       const response = await adminApi.post('/fetch-sales-data', { day });
       setData(response.data);
     } catch (error) {
-      console.error(error);
       toast.error(error.response.data.message);
     }
   };

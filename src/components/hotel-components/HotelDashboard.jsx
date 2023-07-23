@@ -20,7 +20,6 @@ function HotelDashboard(props) {
         setCount(response.data);
       })
       .catch((error) => {
-        console.error(error);
       });
   }, []);
   return (

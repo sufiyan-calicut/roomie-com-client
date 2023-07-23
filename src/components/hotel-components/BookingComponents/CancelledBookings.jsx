@@ -8,7 +8,6 @@ function CancelledBookings() {
     hotelApi.get('/fetch-cancelled-bookings').then((response)=>{
       setData(response.data.bookings);
     }).catch((error)=>{
-      console.error(error);
       toast.error(error.response.error.message);
     })
   },[])

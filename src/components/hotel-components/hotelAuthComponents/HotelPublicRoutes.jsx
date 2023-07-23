@@ -21,7 +21,6 @@ function HotelPublicRoutes() {
       .catch((error) => {
         setHotel(false);
         dispatch(hideLoading());
-        console.error(error, 'error response in admin Auth');
        
       });
   }, []);

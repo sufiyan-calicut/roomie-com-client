@@ -55,7 +55,7 @@ const MobileScreenDisplayRooms = () => {
   //     dispatch(setHotelData(response.data.data));
   //     setFilterDiv(!filterDiv);
   //   } catch (err) {
-  //     console.error('Error on search data', err);
+  
   //   }
   // };
 
@@ -80,7 +80,7 @@ const MobileScreenDisplayRooms = () => {
       })
       .catch((err) => {
         dispatch(hideLoading());
-        console.error('error on search data', err);
+
       });
   };
 

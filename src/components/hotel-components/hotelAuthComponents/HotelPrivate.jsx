@@ -18,7 +18,7 @@ function HotelPrivateRoutes() {
         setHotel(true);
       })
       .catch((error) => {
-        console.error(error)
+
         setHotel(false);
         dispatch(hideLoading());
         navigate('/hotel');

@@ -6,7 +6,7 @@ export default function profileComponent({ value }) {
   const [profileData, setProfileData] = useState();
   useEffect(() => {
     setProfileData(value);
-    console.log(value);
+
   }, []);
   return (
     <>

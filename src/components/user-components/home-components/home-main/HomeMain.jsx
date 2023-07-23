@@ -75,7 +75,7 @@ function HomeMain() {
       dispatch(setHotelData(response.data.data));
       navigate('/display-rooms');
     } catch (err) {
-      console.error('Error on search data', err);
+
     }
   };
   return (
@@ -112,7 +112,7 @@ function HomeMain() {
                 onClick={() => {
                   setOpenRoomDiv(!openRoomDiv);
                   setOpenCalenderDiv(false);
-                  console.log(openCalenderDiv, openRoomDiv);
+
                 }}
               >
                 {room} Room, {sum} Guests

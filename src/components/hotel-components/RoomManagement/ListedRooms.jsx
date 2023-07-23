@@ -25,7 +25,7 @@ function ListedRooms() {
         setRooms(response.data.roomsData);
       })
       .catch((err) => {
-        console.error(err, 'error in /fetch-room-data');
+ 
         dispatch(hideLoading());
       });
   }, []);

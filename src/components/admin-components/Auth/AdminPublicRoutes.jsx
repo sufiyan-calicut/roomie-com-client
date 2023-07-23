@@ -20,7 +20,7 @@ function AdminPublicRoutes() {
       })
       .catch((error) => {
         dispatch(hideLoading());
-        console.error(error, 'error response in admin public route');
+
         setAdmin(false);
       });
   }, []);

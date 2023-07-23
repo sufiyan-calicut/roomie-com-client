@@ -135,7 +135,7 @@ function HotetlRegistrationForm() {
           const newurl = response.data.url;
           imageUrl = [...imageUrl, newurl];
         })
-        .catch((error) => console.error('error inside uploading to cdn', error));
+        .catch((error) => toast.error('network error'));
     }
 
     const response = await hotelApi.post('/newRegistration', {
@@ -274,7 +274,7 @@ function HotetlRegistrationForm() {
                     Select 3 images
                   </label>
                   <input
-                    onChange={(e) => setImages(e.target.files)}
+                    onChange={(e) => {setImages(e.target.files) ; console.log(e.target.files)}}
                     className='p-1 w-44'
                     type='file'
                     accept='image/*'

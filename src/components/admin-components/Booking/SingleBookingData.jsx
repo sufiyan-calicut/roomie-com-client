@@ -43,13 +43,11 @@ function SingleBookingData(props) {
           toast.success(response.data.message);
         })
         .catch((error) => {
-          console.error(error);
           toast.error(error.response.data.message);
         });
     }
   };
 
-  console.log(booking,'booking')
 
 
   const createdAt = moment(booking?.createdAt).format('LLL');
@@ -211,7 +209,6 @@ function SingleBookingData(props) {
                       toast.success(response.data.message);
                     })
                     .catch((error) => {
-                      console.error(error);
                       toast.error(error.response.data.message);
                     });
 

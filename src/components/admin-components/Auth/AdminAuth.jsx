@@ -20,7 +20,7 @@ function AdminAuth() {
       .catch((error) => {
         dispatch(hideLoading());
         localStorage.removeItem('adminToken');
-        console.error(error, 'error response in admin Auth');
+
         navigate('/admin');
       });
   }, []);

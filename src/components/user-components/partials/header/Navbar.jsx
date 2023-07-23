@@ -80,7 +80,7 @@ const Navbar = () => {
       dispatch(setHotelData(response.data.data));
       navigate('/display-rooms');
     } catch (err) {
-      console.error('Error on search data', err);
+
     }
   };
 
@@ -90,7 +90,6 @@ const Navbar = () => {
 
   const handleRoomDiv = (e) => {
     e.stopPropagation();
-    console.log(openCalendar, openRoomDiv);
 
     setOpenRoomDiv(!openRoomDiv);
     setOpenCalendar(false);

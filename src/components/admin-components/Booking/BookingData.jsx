@@ -14,7 +14,7 @@ function BookingData(props) {
         setBooking(response.data.bookings);
       })
       .catch((error) => {
-        console.error(error);
+
         toast.error(error.response.data.message);
       });
   }, [props]);

@@ -19,7 +19,6 @@ function BookingDashboard() {
         setNewRequestCount(response.data.newRequestCount);
       })
       .catch((error) => {
-        console.error(error);
       });
   }, []);
   const [result, setResult] = useState([]);

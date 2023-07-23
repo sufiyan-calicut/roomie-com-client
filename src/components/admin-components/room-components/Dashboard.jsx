@@ -17,7 +17,6 @@ function Dashboard() {
         setPending(response.data.Pending);
       })
       .catch((error) => {
-        console.error(error);
       });
   });
   const handleSearch = () => {
@@ -27,7 +26,6 @@ function Dashboard() {
         setHotels(response.data.bookings);
       })
       .catch((error) => {
-        console.error(error);
       });
   };
   return (

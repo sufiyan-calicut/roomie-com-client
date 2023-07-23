@@ -16,10 +16,10 @@ function Profile() {
     async function fetchData() {
       try {
         const response = await userApi.get('/fetchProfileData');
-        console.log(response, 'profileData');
+
         setProfileData(response.data);
       } catch (error) {
-        console.error(error);
+
         toast.error(error?.response?.data?.message);
       }
     }

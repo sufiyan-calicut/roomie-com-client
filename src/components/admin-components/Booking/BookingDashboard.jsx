@@ -26,7 +26,7 @@ function BookingDashboard() {
         setCancelledBookings(response.data.cancelledBookings);
       })
       .catch((error) => {
-        console.error(error);
+
       });
   }, []);
 
@@ -40,7 +40,7 @@ function BookingDashboard() {
         setResult(response.data.bookings);
       })
       .catch((error) => {
-        console.error(error);
+  
         toast.error(error.response.data.message);
       });
   };

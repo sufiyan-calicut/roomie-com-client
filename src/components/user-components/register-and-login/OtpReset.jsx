@@ -42,7 +42,7 @@ function OtpReset() {
       }
     } catch (error) {
       dispatch(hideLoading());
-      console.error(error);
+
     }
   };
 

@@ -16,7 +16,7 @@ function WalletHistory() {
     try {
       dispatch(showLoading());
       const response = await userApi.get('/fetch-wallet-history');
-      console.log(response);
+
       dispatch(hideLoading());
       setWalletHistory(response.data);
     } catch (error) {

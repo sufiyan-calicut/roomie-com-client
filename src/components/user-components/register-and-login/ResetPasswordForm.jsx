@@ -40,7 +40,7 @@ function ResetPasswordForm() {
     } catch (error) {
       dispatch(hideLoading());
 
-      console.error(error);
+
       toast.error('something went wronglllll');
     }
   };

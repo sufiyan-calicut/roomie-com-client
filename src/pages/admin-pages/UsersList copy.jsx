@@ -44,7 +44,7 @@ function UsersList() {
         toast.success(response.data.message);
       }
     } catch (error) {
-      console.error(error);
+
     }
   };
 

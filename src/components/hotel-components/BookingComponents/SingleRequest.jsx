@@ -68,7 +68,6 @@ const SingleRequest = memo(({ value }) => {
         // setBooking(null);
       })
       .catch((error) => {
-        console.error(error);
         toast.error(error.response.data.message);
       });
   };
@@ -81,7 +80,6 @@ const SingleRequest = memo(({ value }) => {
         setBooking('');
       })
       .catch((error) => {
-        console.error(error);
         toast.error(error.response.data.message);
       });
   };

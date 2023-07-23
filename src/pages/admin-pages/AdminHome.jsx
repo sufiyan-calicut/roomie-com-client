@@ -19,7 +19,7 @@ function AdminHome() {
         setCount(response.data);
       })
       .catch((error) => {
-        console.error(error);
+
       });
   }, []);
 
@@ -44,14 +44,7 @@ function AdminHome() {
             <h4 className='text-gray-100'>{count?.weekSale}</h4>
           </div>
         </div>
-        {/* <div className='w-3/4 h-40 border border-red-800 shadow-lg mx-12 flex flex-col p-10 justify-around'> */}
-        {/* <h1 className='my-2 font-bold tracking-wider text-green-400'>This account is Active</h1>
-          <h1 className='text-gray-500'>
-            We are pleased to inform you that your account has been successfully activated. We are committed to
-            providing you with a seamless booking experience, and we are confident that our partnership will result in
-            increased bookings for your hotel.
-          </h1> */}
-        {/* </div> */}
+
         <div className='my-10'>
           <LineChartComponent />
           

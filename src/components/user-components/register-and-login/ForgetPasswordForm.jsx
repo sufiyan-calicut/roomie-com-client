@@ -29,7 +29,7 @@ function ForgetPasswordForm() {
     } catch (error) {
       dispatch(hideLoading());
 
-      console.error(error);
+
     }
   };
 

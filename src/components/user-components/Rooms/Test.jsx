@@ -51,7 +51,7 @@ const HotelList = () => {
       })
       .catch((err) => {
         dispatch(hideLoading());
-        console.error('error on search data', err);
+
       });
   };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { userApi } from '../../../api/userApi';
 import { toast } from 'react-hot-toast';
-import {IoIosExpand} from 'react-icons/io'
+import { IoIosExpand } from 'react-icons/io';
 
 function Bookings(props) {
   const [counter, setCounter] = useState(0);
@@ -22,7 +22,7 @@ function Bookings(props) {
   const handleCancelBooking = () => {
     const bookingData = {
       booking,
-      reasonText, 
+      reasonText,
     };
     if (!reasonText) return toast.error('write a reason for cancellation');
     userApi
@@ -30,11 +30,11 @@ function Bookings(props) {
       .then((response) => {
         toast.success(response.data.message);
         setDetails(false);
-        console.log(response)
+
         setBooking(response.data.data);
       })
       .catch((error) => {
-        console.error(error);
+
         toast.error(error.response.data.message);
       });
   };
@@ -44,7 +44,9 @@ function Bookings(props) {
         <div className='w-1/4 text-center px-2 py-3'>{booking?.hotelname}</div>
         <div className='w-1/4 text-center px-2 py-3'>{booking?.checkInDate}</div>
         <div className='w-1/4 text-center px-2 py-3'>{booking?.status}</div>
-        <div className='w-1/4 flex justify-center px-2 py-3' onClick={() => setDetails(!details)}><IoIosExpand/></div>
+        <div className='w-1/4 flex justify-center px-2 py-3' onClick={() => setDetails(!details)}>
+          <IoIosExpand />
+        </div>
       </div>
       {details && (
         <div className='w-full h-auto grid grid-cols-3 gap-4 px-6 py-10 bg-cyan-700'>

@@ -18,7 +18,6 @@ function SelectorComponent() {
         setHotel(response.data.data);
       })
       .catch((error) => {
-        console.error(error);
       });
   }, []);
 

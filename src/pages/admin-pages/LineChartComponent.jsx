@@ -23,7 +23,7 @@ const LineChartComponent = () => {
         setData(response.data);
       })
       .catch((error) => {
-        console.error(error);
+   
       });
   }, []);
 

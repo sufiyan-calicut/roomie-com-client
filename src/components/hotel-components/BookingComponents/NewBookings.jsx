@@ -20,7 +20,6 @@ function NewBookings() {
       })
       .catch((error) => {
         dispatch(hideLoading());
-        console.error(error);
       });
   }, []);
 

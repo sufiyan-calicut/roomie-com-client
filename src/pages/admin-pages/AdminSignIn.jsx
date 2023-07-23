@@ -24,7 +24,7 @@ function AdminSignIn() {
       }
     } catch (error) {
       dispatch(hideLoading());
-      console.error(error);
+
       toast.error('something went wrong');
     }
   };

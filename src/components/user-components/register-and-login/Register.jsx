@@ -42,7 +42,7 @@ const Register = () => {
     } catch (error) {
       dispatch(hideLoading());
       toast.error('something went wrong', error);
-      console.error(error);
+
     }
   };
 
