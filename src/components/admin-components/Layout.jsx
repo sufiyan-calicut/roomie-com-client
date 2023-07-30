@@ -82,12 +82,7 @@ function Layout({ children }) {
               <i className='ri-close-fill header-action-icon' onClick={() => setCollapsed(true)}></i>
             )}
 
-            <div className='d-flex align-item-centre px-4'>
-              <i className='ri-user-line px-2' style={{ fontSize: '20px' }}></i>
-              <Link to='/profile' className='anchor'>
-                profile
-              </Link>
-            </div>
+        
           </div>
           <div className='layout-body first-letter overflow-auto'>{children}</div>
         </div>

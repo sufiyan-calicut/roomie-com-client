@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css';
 import { toast } from 'react-hot-toast';
-import { setLocation, setHotelData } from '../../../../reduxToolkit/searchSlice';
+import { setLocation, setHotelData, setIsDataOver } from '../../../../reduxToolkit/searchSlice';
 import { userApi } from '../../../../api/userApi';
 import RoomSelection from './RoomSelection';
 import MyCalendar from './Calender';
@@ -66,8 +66,6 @@ const Navbar = () => {
     }
   }
 
- 
-
   const handleSubmit = async () => {
     if (!searchData.location) {
       return toast.error('Give your location in the search bar');
@@ -78,9 +76,10 @@ const Navbar = () => {
         return toast('No data found', { icon: '👏' });
       }
       dispatch(setHotelData(response.data.data));
+      dispatch(setIsDataOver(response.data.isDataOver));
       navigate('/display-rooms');
     } catch (err) {
-
+      toast.error('something went wrong');
     }
   };
 
@@ -102,12 +101,12 @@ const Navbar = () => {
     };
   }, []);
 
- 
-
   return (
     <nav className='navbar z-50 w-46 md:w-full md:pl-10 md:fixed sm:border-0 md:border-b '>
       <div className='navbar-logo '>
-        <h1 className='font-bold cursor-default text-orange-700' onClick={()=>navigate('/')}>Roomie.com</h1>
+        <h1 className='font-bold cursor-default text-orange-700' onClick={() => navigate('/')}>
+          Roomie.com
+        </h1>
       </div>
       {!isMobile && (
         <div className='navbar-links cursor-defaul'>
@@ -117,7 +116,10 @@ const Navbar = () => {
               placeholder={'search by city or hotel'}
               type='text'
               defaultValue={searchData?.location}
-              onChange={(e) => dispatch(setLocation(e.target.value))}
+              onChange={(e) => {
+                localStorage.setItem('location', e.target.value);
+                dispatch(setLocation(e.target.value));
+              }}
             />
           </div>
           <div
@@ -249,7 +251,6 @@ const Navbar = () => {
       </div>
     </nav>
   );
-  
 };
 
-export default(Navbar);
+export default Navbar;

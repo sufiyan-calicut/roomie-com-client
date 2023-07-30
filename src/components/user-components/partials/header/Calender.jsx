@@ -13,7 +13,7 @@ function MyCalendar() {
     const [checkIn, checkOut] = selectedDates;
     if (checkIn && checkOut) {
       const checkInDate = checkIn.toLocaleString('default', {
-        weekday: 'long',
+        weekday: 'long', 
         day: 'numeric',
         month: 'long',
       });

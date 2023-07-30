@@ -55,7 +55,7 @@ const MobileScreenDisplayRooms = () => {
   //     dispatch(setHotelData(response.data.data));
   //     setFilterDiv(!filterDiv);
   //   } catch (err) {
-  
+
   //   }
   // };
 
@@ -80,7 +80,6 @@ const MobileScreenDisplayRooms = () => {
       })
       .catch((err) => {
         dispatch(hideLoading());
-
       });
   };
 
@@ -108,7 +107,10 @@ const MobileScreenDisplayRooms = () => {
                 defaultValue={searchData?.location}
                 placeholder={'search by city or hotel'}
                 type='text'
-                onChange={(e) => dispatch(setLocation(e.target.value))}
+                onChange={(e) => {
+                  localStorage.setItem('location', e.target.value);
+                  dispatch(setLocation(e.target.value));
+                }}
               />
               <div className='flex '>
                 <div

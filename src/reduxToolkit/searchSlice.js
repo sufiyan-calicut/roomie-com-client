@@ -20,10 +20,11 @@ const tmr =
 const initialState = {
   checkInDate: defaultDate,
   checkOutDate: tmr,
-  location: null,
+  location: localStorage.getItem('location'),
   roomCounts: 1,
   guestCounts: [1],
   hotelData: [],
+  isDataOver: false,
   sort: null,
   amnities: null,
 };
@@ -68,6 +69,10 @@ export const searchSlice = createSlice({
     updateAmnities: (state, action) => {
       state.amnities = action.payload;
     },
+    setIsDataOver:(state, action) => {
+      console.log('insede',action.payload)
+      state.isDataOver = action.payload;
+    }
   },
 });
 
@@ -83,6 +88,7 @@ export const {
   setHotelData,
   sortHotelPrice,
   updateAmnities,
+  setIsDataOver
 } = searchSlice.actions;
 
 export default searchSlice.reducer;

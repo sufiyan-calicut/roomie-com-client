@@ -4,7 +4,13 @@ import { userApi } from '../../../api/userApi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { showLoading, hideLoading } from '../../../reduxToolkit/alertsReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { setHotelData, sortHotelPrice, updateAmnities } from '../../../reduxToolkit/searchSlice';
+import {
+  setHotelData,
+  setIsDataOver,
+  setLocation,
+  sortHotelPrice,
+  updateAmnities,
+} from '../../../reduxToolkit/searchSlice';
 import HotelData from './HotelData';
 
 // import HotelData from './HotelData';
@@ -15,7 +21,6 @@ const HotelList = () => {
   const dispatch = useDispatch();
   const searchData = useSelector((state) => state.search);
   const hotelData = searchData.hotelData;
-
   let [amnities, setAmnities] = useState({
     locker: false,
     dryer: false,
@@ -31,6 +36,14 @@ const HotelList = () => {
     setAmnities((prevamnities) => ({ ...prevamnities, [name]: checked }));
   };
 
+  useEffect(() => {
+    handleSearch();
+    console.log(searchData.isDataOver, 'inside effect');
+  }, []);
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchData.sort]);
   useEffect(() => {
     let finalAmnities = Object.keys(amnities).filter((key) => amnities[key]);
     dispatch(updateAmnities(finalAmnities));
@@ -48,18 +61,17 @@ const HotelList = () => {
         dispatch(hideLoading());
         if (response.data.data.length == 0) return toast('no data found', { icon: '👏' });
         dispatch(setHotelData(response.data.data));
+        dispatch(setIsDataOver(response.data.isDataOver));
       })
       .catch((err) => {
         dispatch(hideLoading());
-
+        toast.err(err?.message);
       });
   };
 
-  
-
   return (
     <div className=''>
-      <div className=' h-auto w-screen flex bg-gray-50 md:pt-20 '>
+      <div className=' h-auto w-screen flex bg-white md:pt-20 '>
         <div className=' h-auto w-92 bg-white  border-gray-300 p-6 border-r '>
           <div className='sticky top-32'>
             <h1 className='font-sans font-bold text-lg'>Filters</h1>
@@ -88,11 +100,10 @@ const HotelList = () => {
                 id='category'
                 onChange={(e) => {
                   dispatch(sortHotelPrice(e.target.value));
-                  handleSearch();
                 }}
               >
-                <option value={-1}>Price Low to High</option>
-                <option value={1}>Price High to Low</option>
+                <option value={1}>Price Low to High</option>
+                <option value={-1}>Price High to Low</option>
               </select>
             </div>
             <div className='px-4 h-auto grid grid-cols-2 gap-2 border mt-10 py-10'>
@@ -211,13 +222,15 @@ const HotelList = () => {
           {hotelData?.map((data, i) => {
             return <HotelData key={i} value={data} />;
           })}
-          <div
-            className='bg-white hover:bg-gray-300 duration-300 cursor-pointer h-10 w-40 left-0 right-0 mx-auto my-10 flex items-center justify-center text-blue-900'
-            onClick={handleSearch}
-          >
-            {' '}
-            Show More
-          </div>
+          {!searchData.isDataOver && (
+            <div
+              className='bg-white hover:bg-gray-300 duration-300 cursor-pointer h-10 w-40 left-0 right-0 mx-auto my-10 flex items-center justify-center text-blue-900'
+              onClick={handleSearch}
+            >
+              {' '}
+              Show More
+            </div>
+          )}
         </div>
       </div>
     </div>
