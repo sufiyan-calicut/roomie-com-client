@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export const userApi = axios.create({
   baseURL: 'http://localhost:4000/api/user',
+  // baseURL: 'http://localhost:4000/api/user',
 });
 userApi.interceptors.request.use(
   (config) => {
