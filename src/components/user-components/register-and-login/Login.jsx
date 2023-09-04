@@ -9,7 +9,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  alert('hello');
   const navigate = useNavigate();
 
   const userData = {
@@ -45,6 +44,8 @@ const Login = () => {
 
   return (
     <div className='bg-gradient-to-r from-blue-900 to-slate-900 w-screen h-screen flex items-center justify-center '>
+      {alert('hello')}
+
       <div className='flex p-6 bg-gray-100 items-center justify-center  flex-col h-auto w-80  rounded-lg shadow-lg '>
         <h1 className='m-6 font-semibold text-blue-900 text-xl'>SIGN IN</h1>
         <form className='p-4  ' onSubmit={handleSubmit}>
