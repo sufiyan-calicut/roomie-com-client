@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const hotelApi = axios.create({
-  baseURL: 'https://roomie-server.onrender.com/api/hotel',
+  baseURL: 'http://localhost:4000/api/hotel',
 });
 
 hotelApi.interceptors.request.use(

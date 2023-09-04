@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+
 export const userApi = axios.create({
-  baseURL: 'https://roomie-server.onrender.com/api/user',
+  baseURL: 'http://localhost:4000/api/user',
 });
 userApi.interceptors.request.use(
   (config) => {
