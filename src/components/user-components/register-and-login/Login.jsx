@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom';
@@ -10,7 +9,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  alert('hello');
   const navigate = useNavigate();
 
   const userData = {
@@ -41,7 +40,6 @@ const Login = () => {
     } catch (error) {
       dispatch(hideLoading());
       toast.error('something went wrong');
-
     }
   };
 
@@ -71,9 +69,8 @@ const Login = () => {
             required
           />
           <p className=' w-full flex justify-end '>
-            
             <Link to='/forget-password' className=' ml-1  hover:underline'>
-            forgot password?
+              forgot password?
             </Link>
           </p>
 
