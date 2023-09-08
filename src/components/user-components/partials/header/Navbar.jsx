@@ -113,7 +113,7 @@ const Navbar = () => {
           <div className=''>
             <input
               className='searchInput  flex items-center justify-center text-center w-60 font-normal text-sm tracking-wider text-md '
-              placeholder={'search by city or hotel'}
+              placeholder={'ex: trivandrum'}
               type='text'
               defaultValue={searchData?.location}
               onChange={(e) => {

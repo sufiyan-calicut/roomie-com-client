@@ -86,7 +86,7 @@ function HomeMain() {
             <input
               className='w-full text-center text-xs text-gray-500'
               defaultValue={searchData?.location}
-              placeholder={'search by city or hotel'}
+              placeholder={'ex: Trivandrum'}
               type='text'
               onChange={(e) => dispatch(setLocation(e.target.value))}
             />
