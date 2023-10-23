@@ -295,7 +295,7 @@ const MobileScreenDisplayRooms = () => {
             <div key={index} className=' m-3  border border-gra-600 shadow-md rounded-lg'>
               <div className='flex overflow-x-scroll'>
                 {hotel?.images?.map((image, index) => (
-                  <img key={index} src={image} alt={`Image ${index}`} className='w-1/2 h-auto' />
+                  <img loading='lazy' key={index} src={image} alt={`Image ${index}`} className='w-1/2 h-auto' />
                 ))}
               </div>
               <div className='w-full grid grid-cols-2 gap-4 '>

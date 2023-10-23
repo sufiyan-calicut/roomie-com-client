@@ -162,6 +162,7 @@ function SingleRoom() {
                 src={hotel?.images[position]}
                 alt='Large Image'
                 className='h-full w-full border r'
+                loading='lazy'
               />
             ) : (
               <div className='w-full  h-full m-auto catalog-product '>
@@ -187,6 +188,7 @@ function SingleRoom() {
                   alt='Large Image'
                   onClick={() => setPosition(0)}
                   className='h-full w-full'
+                  loading='lazy'
                 />
               ) : (
                 <div className='w-full  h-full m-auto catalog-product '>
@@ -209,6 +211,7 @@ function SingleRoom() {
                   alt='Large Image'
                   onClick={() => setPosition(1)}
                   className='h-full w-full'
+                  loading='lazy'
                 />
               ) : (
                 <div className='w-full  h-full m-auto catalog-product '>
@@ -230,6 +233,7 @@ function SingleRoom() {
                   src={hotel?.images[1]}
                   alt='Large Image'
                   onClick={() => setPosition(1)}
+                  loading='lazy'
                   className='h-full w-full'
                 />
               ) : (

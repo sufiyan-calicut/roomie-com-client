@@ -33,7 +33,7 @@ function Profile() {
           <div className='hidden md:block  md:pb-10 top-0 bg-gray-300 border-b rounded-b-md m-2 mt-0'>
             <div className='flex flex-col'>
               <div className='left-0 right-0 mx-auto h-20 w-20 rounded-full my-4'>
-                <img className='rounded-full h-20 w-20' src={img} alt='Profile' />
+                <img loading='lazy' className='rounded-full h-20 w-20' src={img} alt='Profile' />
               </div>
               <h4 className='text-red-900 left-0 right-0 mx-auto text-xs font-semibold mt-2'>{profileData?.name}</h4>
               <h4 className='text-red-900 left-0 right-0 mx-auto text-xs font-semibold'>{profileData?.email}</h4>

@@ -28,7 +28,7 @@ function NewRequests() {
   };
 
   const DeclineRequest = () => {
-    if(!cancelReason){
+    if (!cancelReason) {
       return toast.error('write a reason for this cancellation');
     }
     if (!showToast) {
@@ -38,7 +38,7 @@ function NewRequests() {
         setCancelReason('');
         setCancelDiv(false);
         try {
-          await adminApi.post('/decline-hotel-request', { hotelID,cancelReason }).then((response) => {
+          await adminApi.post('/decline-hotel-request', { hotelID, cancelReason }).then((response) => {
             setNewHotels(response.data.newHotels);
             toast.success(response.data.message);
           });
@@ -155,7 +155,13 @@ function NewRequests() {
             </div>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-8'>
               {hotel?.images.map((image, index) => (
-                <img key={index} src={image} alt={`Image ${index}`} className='w-full h-auto rounded-lg shadow-md' />
+                <img
+                  loading='lazy'
+                  key={index}
+                  src={image}
+                  alt={`Image ${index}`}
+                  className='w-full h-auto rounded-lg shadow-md'
+                />
               ))}
             </div>
             <div className='mb-8'>

@@ -150,14 +150,14 @@ function HomeMain() {
             </p>
           </div>
           <div className='md:w-1/2 coverpic h- w-full object-cover '>
-            <img className='h-auto w-full object-cover coverpic bg-white ' src={myImage} />
+            <img loading='lazy' className='h-auto w-full object-cover coverpic bg-white ' src={myImage} />
           </div>
         </div>
       </div>
       <div className='mt-16 md:mx-20'>
         <div className='flex flex-col md:flex-row items-center justify-center h- md:justify-between bg-white cover-div  '>
           <div className='md:w-1/2 coverpic h- w-full object-cover '>
-            <img className='h-auto w-full object-cover coverpic bg-white ' src={explore} />
+            <img loading='lazy' className='h-auto w-full object-cover coverpic bg-white ' src={explore} />
           </div>
           <div className='text-center md:text-left mb-10 md:mb-0  '>
             <h1 className='text-md font-sans font-thi    mb-4 welcome-text'>
@@ -186,7 +186,7 @@ function HomeMain() {
             </p>
           </div>
           <div className='md:w-1/2 coverpic h-fit w-full object-cover '>
-            <img className=' w-full object-cover coverpic bg-white ' src={location} />
+            <img loading='lazy' className=' w-full object-cover coverpic bg-white ' src={location} />
           </div>
         </div>
       </div>

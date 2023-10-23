@@ -65,7 +65,7 @@ const HotelList = () => {
       })
       .catch((err) => {
         dispatch(hideLoading());
-        toast.err(err?.message);
+        toast.error(err?.message);
       });
   };
 

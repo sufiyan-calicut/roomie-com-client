@@ -130,7 +130,13 @@ function HotelLists() {
               </div>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-8'>
                 {singleHotel?.images.map((image, index) => (
-                  <img key={index} src={image} alt={`Image ${index}`} className='w-full h-auto rounded-lg shadow-md' />
+                  <img
+                    loading='lazy'
+                    key={index}
+                    src={image}
+                    alt={`Image ${index}`}
+                    className='w-full h-auto rounded-lg shadow-md'
+                  />
                 ))}
               </div>
               <div className='mb-8'>

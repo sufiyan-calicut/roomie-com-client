@@ -23,7 +23,7 @@ function Wallet() {
     <div className='bg-red-80  w-5/6 h-full text-black overflow-auto  flex items-start justify-center'>
       <div className='bg-cyan-800 h-3/4 w-2/4 p-10 rounded-b-md flex flex-col items-center justify-center gap-4'>
         <div className='left-0 right-0 mx-auto rounded-full h-32 w-32 bg-blue-50'>
-          <img src={img} className='rounded-full h-32 w-32' alt='' />
+          <img loading='lazy' src={img} className='rounded-full h-32 w-32' alt='' />
         </div>
         <h1 className='font-bold text-gray-300 tracking-wider'>Sufiyan</h1>
         <h1 className='text-gray-300 tracking-wider'>Sufiyan@gmail.com</h1>

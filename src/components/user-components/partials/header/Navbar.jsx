@@ -237,7 +237,7 @@ const Navbar = () => {
               }`}
               onClick={handleSidebarToggle}
             >
-              <img src={profile} alt='nn' />
+              <img loading='lazy' src={profile} alt='nn' />
             </div>
           </div>
         ) : (
@@ -245,7 +245,7 @@ const Navbar = () => {
             className=' top-4 right-0 w-8 h-8 focus:outline-none  rounded-full flex justify-end items-center cursor-pointer z-'
             onClick={() => navigate('/profile')}
           >
-            <img src={profile} alt='nn' />
+            <img loading='lazy' src={profile} alt='nn' />
           </div>
         )}
       </div>

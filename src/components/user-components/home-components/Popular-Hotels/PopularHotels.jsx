@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { userApi } from '../../../../api/userApi';
 import { useNavigate } from 'react-router-dom';
 
@@ -35,6 +35,7 @@ function PopularHotels() {
             <div key={product?._id} className='group relative hover:shadow-lg rounded-md'>
               <div className='min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80 '>
                 <img
+                  loading='lazy'
                   src={product.images}
                   alt={product?.imageAlt}
                   className='h-full w-full object-cover object-center lg:h-full lg:w-full'
