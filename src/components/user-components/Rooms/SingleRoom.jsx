@@ -29,10 +29,10 @@ function SingleRoom() {
         .post('/fetch-single-room-data', { id: location.state })
         .then((response) => {
 
-          setWallet(response.data.wallet.balance);
-          setHotel(response.data.data);
+          setWallet(response?.data?.wallet?.balance);
+          setHotel(response?.data?.data);
         })
-        .catch((err) => {
+        .catch((err) => {        
           dispatch(hideLoading());
 
         });
@@ -56,7 +56,7 @@ function SingleRoom() {
   // Convert the difference to days
   const totalStayDays = diffInMs / (1000 * 60 * 60 * 24);
 
-  const room = searchData.roomCounts;
+  const room = searchData?.roomCounts;
   let guest = [...searchData.guestCounts];
 
   guest = guest?.map((element) => parseInt(element));
