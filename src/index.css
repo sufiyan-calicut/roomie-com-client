@@ -272,6 +272,7 @@ html {
   scroll-behavior: smooth !important;
 }
 .booking-success {
+  font-family: 'Quicksand',sans-serif;
 }
 .booking {
   height: 160vh !important;

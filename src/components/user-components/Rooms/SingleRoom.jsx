@@ -28,13 +28,13 @@ function SingleRoom() {
       await userApi
         .post('/fetch-single-room-data', { id: location.state })
         .then((response) => {
-
-          setWallet(response?.data?.wallet?.balance);
+          console.log(response, 'response tester');
+          setWallet(response?.data.wallet.balance);
           setHotel(response?.data?.data);
         })
-        .catch((err) => {        
+        .catch((err) => {
+          console.log(err);
           dispatch(hideLoading());
-
         });
     };
 
@@ -69,7 +69,6 @@ function SingleRoom() {
 
   let cashTobePay = Math.max(totalPrice - wallet, 0);
   let walletPayment = Math.max(totalPrice - cashTobePay, 0);
-
 
   const handleBooking = async () => {
     try {
@@ -107,12 +106,14 @@ function SingleRoom() {
             handleRazorpay(response.data.order);
           })
           .catch((error) => {
+            console.log(error);
             toast.dismiss();
             toast.error(error.response.data.message);
           });
       }
     } catch (error) {
-}
+      console.log(error);
+    }
   };
 
   const handleRazorpay = (order) => {
