@@ -162,7 +162,7 @@ function HotetlRegistrationForm() {
       >
         <div className=' mb-6  border-b w-fit p-2'>
           <h1 className='text-xl font-mono '>
-            REGISTER YOUR HOTEL IN <span className=' text-blue-900'>Book my stay</span>
+            REGISTER YOUR HOTEL IN <span className=' text-blue-900'>Roomie-com</span>
           </h1>
         </div>
         <form ref={formRef} className='  text-sm text-blue-900' id='form'>
