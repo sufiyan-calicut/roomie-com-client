@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const api = axios.create({
   // baseURL: 'https://roomie-server.onrender.com/api',
-  // baseURL: 'https://kilt-rhinoceros.cyclic.app/api',
-  baseURL: 'http://localhost:4000/api/',
+  baseURL: 'https://kilt-rhinoceros.cyclic.app/api',
+  // baseURL: 'http://localhost:4000/api/',
 });
 
 // api.interceptors.request.use(
