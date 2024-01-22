@@ -192,10 +192,10 @@ function HotetlRegistrationForm() {
                   <input
                     onChange={(e) => setEmail(e.target.value)}
                     className=' shadow-none p-1  border rounded-full'
-                    type='text'
+                    type='email'
                     autoComplete='off'
-                    name='hotelName'
-                    id='hotelName'
+                    name='email'
+                    id='email'
                     placeholder='Contact email'
                   />
                 </div>{' '}
@@ -320,7 +320,7 @@ function HotetlRegistrationForm() {
 
                 <button
                   type='button'
-                  onClick={() => setRooms(rooms + 1)}
+                  onClick={() => setRooms(rooms == 6 ? 6 : rooms + 1)}
                   className='bg-white rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center'
                 >
                   <i className='ri-add-line'></i>
@@ -344,7 +344,7 @@ function HotetlRegistrationForm() {
                 <h1> {allowedGuests} </h1>
                 <button
                   type='button'
-                  onClick={() => setAllowedGuests(allowedGuests + 1)}
+                  onClick={() => setAllowedGuests(allowedGuests === 3 ? 3 : allowedGuests + 1)}
                   className='bg-white rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center'
                 >
                   <i className='ri-add-line'></i>
@@ -367,7 +367,7 @@ function HotetlRegistrationForm() {
                 <h1> {Kitchen} </h1>
                 <button
                   type='button'
-                  onClick={() => setKitchen(Kitchen + 1)}
+                  onClick={() => setKitchen(Kitchen === 6 ? 6 : Kitchen + 1)}
                   className='bg-white rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center'
                 >
                   <i className='ri-add-line'></i>
@@ -390,7 +390,7 @@ function HotetlRegistrationForm() {
                 <h1> {pool} </h1>
                 <button
                   type='button'
-                  onClick={() => setPool(pool + 1)}
+                  onClick={() => setPool(pool === 5 ? 5 : pool + 1)}
                   className='bg-white rounded-full w-11 h-11 border-2 hover:shadow-xl hover:border-3  hover:duration-300 mx-4 flex items-center justify-center'
                 >
                   <i className='ri-add-line'></i>
